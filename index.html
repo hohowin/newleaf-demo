@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Newleaf Grace Hub — Design Samples</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#F5EDD8; font-family:'DM Sans',sans-serif; color:#2A2520; min-height:100vh; }
+
+  header {
+    background:#2C5F2E;
+    padding:3rem 3rem 2.5rem;
+    border-bottom:4px solid #7EB87E;
+  }
+  header h1 { font-family:'Lora',serif; font-size:1.8rem; color:#F5EDD8; font-weight:400; font-style:italic; }
+  header p { color:rgba(245,237,216,0.65); font-size:0.85rem; margin-top:0.35rem; letter-spacing:0.05em; }
+
+  main { max-width:1000px; margin:0 auto; padding:3rem 2rem 5rem; }
+
+  .section-label {
+    font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase;
+    color:#B8693C; margin-bottom:1.25rem; margin-top:2.5rem;
+    display:flex; align-items:center; gap:0.75rem;
+  }
+  .section-label::after {
+    content:''; flex:1; height:1px; background:rgba(44,95,46,0.15);
+  }
+
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1rem; }
+
+  .card {
+    display:block; text-decoration:none;
+    background:#fff;
+    border:1.5px solid rgba(44,95,46,0.12);
+    border-radius:12px;
+    padding:1.25rem 1.5rem;
+    transition:all 0.25s ease;
+    position:relative;
+    overflow:hidden;
+  }
+  .card::before {
+    content:'';
+    position:absolute; left:0; top:0; bottom:0; width:3px;
+    background:linear-gradient(to bottom, #7EB87E, #2C5F2E);
+    opacity:0; transition:opacity 0.25s;
+  }
+  .card:hover { border-color:rgba(44,95,46,0.35); transform:translateY(-3px); box-shadow:0 8px 24px rgba(44,95,46,0.1); }
+  .card:hover::before { opacity:1; }
+
+  .card-num { font-family:'Lora',serif; font-size:2rem; color:rgba(44,95,46,0.1); font-weight:600; line-height:1; margin-bottom:0.5rem; }
+  .card-title { font-family:'Lora',serif; font-size:1.05rem; color:#2A2520; margin-bottom:0.25rem; }
+  .card-style { font-size:0.78rem; color:#8A8278; }
+
+  .card-logo {
+    background:linear-gradient(135deg, #2A2520, #1A1512);
+    border-color:transparent;
+  }
+  .card-logo .card-num { color:rgba(126,184,126,0.25); }
+  .card-logo .card-title { color:#F5EDD8; }
+  .card-logo .card-style { color:rgba(245,237,216,0.45); }
+  .card-logo::before { background:linear-gradient(to bottom, #7EB87E, #B8693C); }
+
+  footer { text-align:center; padding:2rem; font-size:0.78rem; color:#8A8278; background:#EDE4CC; border-top:1px solid rgba(44,95,46,0.1); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Newleaf Grace Hub · 新葉恩亭</h1>
+  <p>Design Samples — Landing Pages &amp; Logos</p>
+</header>
+
+<main>
+
+  <p class="section-label">Logos</p>
+  <div class="grid">
+    <a href="logos.html" class="card card-logo">
+      <div class="card-num">☆</div>
+      <div class="card-title">Logo Concepts</div>
+      <div class="card-style">5 SVG logo concepts · brand palette gallery</div>
+    </a>
+  </div>
+
+  <p class="section-label">Batch 1 — Style Presets</p>
+  <div class="grid">
+    <a href="landing-1.html" class="card">
+      <div class="card-num">01</div>
+      <div class="card-title">Organic Nature</div>
+      <div class="card-style">Forest gradients · floating leaf particles · blob shapes</div>
+    </a>
+    <a href="landing-2.html" class="card">
+      <div class="card-num">02</div>
+      <div class="card-title">Elegant Serif Premium</div>
+      <div class="card-style">Editorial split hero · giant italic numbers · fine rules</div>
+    </a>
+    <a href="landing-3.html" class="card">
+      <div class="card-num">03</div>
+      <div class="card-title">Glassmorphic Modern</div>
+      <div class="card-style">Dark bg · animated gradient orbs · backdrop blur cards</div>
+    </a>
+    <a href="landing-4.html" class="card">
+      <div class="card-num">04</div>
+      <div class="card-title">Clean Minimal</div>
+      <div class="card-style">Maximum whitespace · forest accent only · hover rows</div>
+    </a>
+    <a href="landing-5.html" class="card">
+      <div class="card-num">05</div>
+      <div class="card-title">Warm Vintage</div>
+      <div class="card-style">Parchment · CSS noise texture · ornamental rules · stamp badge</div>
+    </a>
+  </div>
+
+  <p class="section-label">Batch 2 — Photo &amp; Illustrated</p>
+  <div class="grid">
+    <a href="landing-6.html" class="card">
+      <div class="card-num">06</div>
+      <div class="card-title">Photo Immersive</div>
+      <div class="card-style">Ken Burns hero · picsum photos · photo card headers</div>
+    </a>
+    <a href="landing-7.html" class="card">
+      <div class="card-num">07</div>
+      <div class="card-title">SVG Storybook</div>
+      <div class="card-style">Hand-drawn scene · animated trees · people on path · chimney smoke</div>
+    </a>
+    <a href="landing-8.html" class="card">
+      <div class="card-num">08</div>
+      <div class="card-title">Botanical Wallpaper</div>
+      <div class="card-style">Fixed tiling SVG pattern · frosted glass cards · leaf rain animation</div>
+    </a>
+    <a href="landing-9.html" class="card">
+      <div class="card-num">09</div>
+      <div class="card-title">Watercolour Painterly</div>
+      <div class="card-style">Morphing gradient washes · blob photo frames · brush stroke ornaments</div>
+    </a>
+    <a href="landing-10.html" class="card">
+      <div class="card-num">10</div>
+      <div class="card-title">Editorial Cinema</div>
+      <div class="card-style">Letterbox open · slow zoom · draggable photo strip · dark grade</div>
+    </a>
+  </div>
+
+</main>
+
+<footer>Newleaf Grace Hub · 新葉恩亭 · Design Samples · 2026</footer>
+
+</body>
+</html>

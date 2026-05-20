@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newleaf Grace Hub · Photo Immersive</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400&display=swap" rel="stylesheet">
+  <script>tailwind.config={theme:{extend:{colors:{forest:'#2C5F2E',spring:'#7EB87E',terra:'#B8693C',cream:'#F5EDD8',charcoal:'#2A2520',teal:'#2E5D5A',linen:'#EDE4CC',wgray:'#8A8278'},fontFamily:{display:['Lora','Georgia','serif'],body:['DM Sans','system-ui','sans-serif']}}}}</script>
+  <style>
+    body{font-family:'DM Sans',system-ui,sans-serif;}
+    .photo-bg{background-size:cover;background-position:center;background-repeat:no-repeat;}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);}
+    .reveal.on{opacity:1;transform:none;}
+    .service-img{transition:transform .5s ease;}
+    .service-card:hover .service-img{transform:scale(1.06);}
+    .parallax-hero{background-attachment:fixed;}
+    @keyframes ken-burns{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.12) translate(-1%,-1%)}}
+    .hero-img{animation:ken-burns 20s ease-in-out infinite alternate;}
+  </style>
+</head>
+<body class="bg-charcoal text-cream overflow-x-hidden">
+
+<!-- NAV -->
+<nav class="fixed top-0 inset-x-0 z-50 flex items-center justify-between px-8 py-5" style="background:rgba(42,37,32,.85);backdrop-filter:blur(16px);border-bottom:1px solid rgba(245,237,216,.08)">
+  <div class="flex items-center gap-3">
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 2C20 4,26 10,24 17C22 24,18 27,14 28C10 27,6 24,4 17C2 10,8 4,14 2Z" fill="#7EB87E"/><line x1="14" y1="3" x2="14" y2="27" stroke="#2C5F2E" stroke-width=".8"/></svg>
+    <div><p class="font-display text-cream text-sm">Newleaf Grace Hub</p><p class="text-spring text-xs tracking-[.3em]" style="font-size:9px">新葉恩亭</p></div>
+  </div>
+  <div class="hidden md:flex items-center gap-8 text-cream/60 text-sm">
+    <a href="#services" class="hover:text-spring transition-colors">Services</a>
+    <a href="#about" class="hover:text-spring transition-colors">About</a>
+    <a href="#contact" class="bg-terra text-cream text-sm px-5 py-2.5 rounded-full hover:brightness-110 transition-all">Visit Us</a>
+  </div>
+</nav>
+
+<!-- HERO — Ken Burns photo -->
+<section class="relative h-screen overflow-hidden">
+  <div class="hero-img absolute inset-0 photo-bg" style="background-image:url('https://picsum.photos/seed/forest-morning-mist/1920/1080')"></div>
+  <div class="absolute inset-0" style="background:linear-gradient(160deg,rgba(44,95,46,.75) 0%,rgba(42,37,32,.6) 50%,rgba(46,93,90,.7) 100%)"></div>
+  <!-- Leaf particle layer -->
+  <div id="leaves" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
+  <div class="relative z-10 h-full flex items-center px-8 md:px-20">
+    <div class="max-w-3xl">
+      <p class="text-spring text-xs tracking-[.45em] uppercase mb-6 opacity-0" id="h1" style="text-shadow:0 1px 8px rgba(0,0,0,.5)">Mississauga · Ontario · Canada</p>
+      <h1 class="font-display text-cream leading-[1.05] mb-8 opacity-0" id="h2" style="font-size:clamp(3rem,6vw,5.5rem);text-shadow:0 2px 24px rgba(0,0,0,.4)">
+        A Place to <em>Rest,</em><br>Renew &amp; Reconnect
+      </h1>
+      <p class="text-cream/75 text-xl font-light leading-relaxed mb-12 max-w-xl opacity-0" id="h3" style="text-shadow:0 1px 12px rgba(0,0,0,.4)">
+        新葉恩亭 — a welcoming community café and support hub for the weary and burdened, near Credit Valley Hospital.
+      </p>
+      <div class="flex flex-wrap gap-4 opacity-0" id="h4">
+        <a href="#services" class="bg-spring text-charcoal px-8 py-4 rounded-full font-medium hover:bg-cream transition-all hover:scale-105 duration-300">Explore Services</a>
+        <a href="#about" class="border border-cream/35 text-cream px-8 py-4 rounded-full font-light hover:bg-cream/15 transition-all">Our Story</a>
+      </div>
+    </div>
+  </div>
+  <!-- Scroll cue -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50" id="scroll-cue">
+    <p class="text-cream text-xs tracking-widest uppercase">Scroll</p>
+    <div class="w-px h-10 bg-cream/40" style="animation:scaleY 1.5s ease-in-out infinite alternate;transform-origin:top"></div>
+  </div>
+</section>
+
+<!-- SERVICES — photo cards -->
+<section id="services" class="py-24 px-6 bg-charcoal">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <p class="text-terra text-xs tracking-[.4em] uppercase mb-4">主要服務 · What We Offer</p>
+      <h2 class="font-display text-cream text-4xl md:text-5xl mb-3">Six Pillars of <em class="text-spring">Care</em></h2>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <!-- Each card: photo top, text bottom -->
+      <div class="service-card reveal overflow-hidden rounded-2xl bg-charcoal border border-white/6 cursor-default">
+        <div class="h-44 overflow-hidden"><img src="https://picsum.photos/seed/cafe-warmth/500/300" class="service-img w-full h-full object-cover" alt=""/></div>
+        <div class="p-6"><p class="text-spring text-xs tracking-widest uppercase mb-2">社區空間</p><h3 class="font-display text-cream text-xl mb-2">Community Space</h3><p class="text-cream/50 text-sm leading-relaxed font-light">A safe café environment fostering connection and rest, open to all.</p></div>
+      </div>
+      <div class="service-card reveal overflow-hidden rounded-2xl bg-charcoal border border-white/6 cursor-default" style="transition-delay:.07s">
+        <div class="h-44 overflow-hidden"><img src="https://picsum.photos/seed/counseling-warm/500/300" class="service-img w-full h-full object-cover" alt=""/></div>
+        <div class="p-6"><p class="text-terra text-xs tracking-widest uppercase mb-2">輔導關懷</p><h3 class="font-display text-cream text-xl mb-2">Counselling &amp; Care</h3><p class="text-cream/50 text-sm leading-relaxed font-light">Emotional and spiritual support in safe, private spaces.</p></div>
+      </div>
+      <div class="service-card reveal overflow-hidden rounded-2xl bg-charcoal border border-white/6 cursor-default" style="transition-delay:.14s">
+        <div class="h-44 overflow-hidden"><img src="https://picsum.photos/seed/people-community/500/300" class="service-img w-full h-full object-cover" alt=""/></div>
+        <div class="p-6"><p class="text-teal text-xs tracking-widest uppercase mb-2">支援小組</p><h3 class="font-display text-cream text-xl mb-2">Support Groups</h3><p class="text-cream/50 text-sm leading-relaxed font-light">Peer groups for caregivers and families — shared encouragement.</p></div>
+      </div>
+      <div class="service-card reveal overflow-hidden rounded-2xl bg-charcoal border border-white/6 cursor-default" style="transition-delay:.07s">
+        <div class="h-44 overflow-hidden"><img src="https://picsum.photos/seed/workshop-learning/500/300" class="service-img w-full h-full object-cover" alt=""/></div>
+        <div class="p-6"><p class="text-spring text-xs tracking-widest uppercase mb-2">工作坊退修</p><h3 class="font-display text-cream text-xl mb-2">Workshops &amp; Retreats</h3><p class="text-cream/50 text-sm leading-relaxed font-light">Holistic growth, ESL, and community-building programs.</p></div>
+      </div>
+      <div class="service-card reveal overflow-hidden rounded-2xl bg-charcoal border border-white/6 cursor-default" style="transition-delay:.14s">
+        <div class="h-44 overflow-hidden"><img src="https://picsum.photos/seed/creative-arts/500/300" class="service-img w-full h-full object-cover" alt=""/></div>
+        <div class="p-6"><p class="text-terra text-xs tracking-widest uppercase mb-2">康樂創意</p><h3 class="font-display text-cream text-xl mb-2">Recreation &amp; Creative</h3><p class="text-cream/50 text-sm leading-relaxed font-light">Arts, singing, and activities for mind, body, and spirit.</p></div>
+      </div>
+      <div class="service-card reveal overflow-hidden rounded-2xl bg-charcoal border border-white/6 cursor-default" style="transition-delay:.21s">
+        <div class="h-44 overflow-hidden"><img src="https://picsum.photos/seed/hospital-garden/500/300" class="service-img w-full h-full object-cover" alt=""/></div>
+        <div class="p-6"><p class="text-teal text-xs tracking-widest uppercase mb-2">社區合作</p><h3 class="font-display text-cream text-xl mb-2">Community Collaboration</h3><p class="text-cream/50 text-sm leading-relaxed font-light">Partnering with hospitals and churches near Credit Valley.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO CTA BAND -->
+<section id="about" class="relative py-32 overflow-hidden">
+  <div class="absolute inset-0 photo-bg" style="background-image:url('https://picsum.photos/seed/community-warmth/1920/600')"></div>
+  <div class="absolute inset-0" style="background:linear-gradient(to right,rgba(44,95,46,.92) 0%,rgba(44,95,46,.75) 50%,rgba(46,93,90,.65) 100%)"></div>
+  <div class="relative z-10 max-w-3xl mx-auto text-center px-6 reveal">
+    <p class="text-spring text-xs tracking-[.4em] uppercase mb-6">歡迎你 · Come As You Are</p>
+    <h2 class="font-display text-cream text-4xl md:text-5xl mb-6 leading-tight">You Don't Have to<br><em>Carry It Alone</em></h2>
+    <p class="text-cream/70 text-lg font-light leading-relaxed mb-10">Doors open near Credit Valley Hospital, Mississauga — for the weary, the burdened, and all who need rest.</p>
+    <a href="#contact" class="inline-block bg-terra text-cream px-10 py-4 rounded-full font-medium text-lg hover:brightness-110 hover:scale-105 transition-all duration-300 shadow-xl">Visit Newleaf Grace Hub →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact" class="bg-charcoal border-t border-white/8 py-14 px-6 text-cream/45">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-12 mb-10">
+    <div><p class="font-display text-cream text-sm mb-1">Newleaf Grace Hub</p><p class="text-spring text-xs tracking-widest mb-4" style="font-size:9px">新葉恩亭</p><p class="text-xs leading-relaxed font-light">Registered Canadian Non-Profit. Sponsored by MSCBC.</p></div>
+    <div><p class="text-cream/60 text-xs tracking-widest uppercase mb-4">Services</p><ul class="space-y-1.5 text-xs font-light"><li>Community Café Space</li><li>Counselling &amp; Pastoral Care</li><li>Support Groups</li><li>Workshops &amp; Retreats</li><li>Recreation &amp; Creative</li><li>Community Collaboration</li></ul></div>
+    <div><p class="text-cream/60 text-xs tracking-widest uppercase mb-4">Find Us</p><p class="text-xs font-light leading-relaxed mb-2">Near Credit Valley Hospital<br>Mississauga, Ontario</p><p class="text-xs font-light">Mon–Fri 9am–6pm</p></div>
+  </div>
+  <div class="border-t border-white/6 pt-6 flex justify-between text-xs font-light flex-wrap gap-3">
+    <p>© 2026 Newleaf Grace Hub · 新葉恩亭</p><p>Registered Canadian Non-Profit Charity</p>
+  </div>
+</footer>
+
+<script>
+anime.timeline({easing:'easeOutExpo'})
+  .add({targets:'#h1',opacity:[0,1],translateY:[14,0],duration:700})
+  .add({targets:'#h2',opacity:[0,1],translateY:[28,0],duration:900},'-=400')
+  .add({targets:'#h3',opacity:[0,1],translateY:[18,0],duration:700},'-=500')
+  .add({targets:'#h4',opacity:[0,1],translateY:[16,0],duration:700},'-=400');
+
+const lc=document.getElementById('leaves');
+for(let i=0;i<16;i++){
+  const d=document.createElement('div');const s=Math.random()*20+8;
+  d.style.cssText=`position:absolute;left:${Math.random()*100}%;top:${Math.random()*100}%;pointer-events:none;opacity:0`;
+  d.innerHTML=`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none"><path d="M12 2C17 3.5,21 9,19 14C17 19,14 21,12 22C10 21,7 19,5 14C3 9,7 3.5,12 2Z" fill="#7EB87E" opacity="${Math.random()*.3+.1}"/></svg>`;
+  lc.appendChild(d);
+}
+anime({targets:'#leaves div',translateY:[0,anime.stagger([-250,-500],{from:'random'})],rotate:anime.stagger([-60,60],{from:'random'}),opacity:[{value:[0,.6],duration:400},{value:0,duration:2000}],duration:anime.stagger([4000,7000],{from:'random'}),delay:anime.stagger(250,{start:0}),loop:true,easing:'easeInOutSine'});
+
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

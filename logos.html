@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新葉恩亭 · Logo Concepts</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Brand tokens (from brand-guidelines SKILL.md) ── */
+    :root {
+      --forest:     #2C5F2E;
+      --cream:      #F5EDD8;
+      --spring:     #7EB87E;
+      --terracotta: #B8693C;
+      --charcoal:   #2A2520;
+      --warm-gray:  #8A8278;
+      --linen:      #EDE4CC;
+      --deep-teal:  #2E5D5A;
+    }
+
+    body {
+      background: var(--charcoal);
+      color: var(--cream);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      padding: 88px 24px 110px;
+    }
+
+    /* ── Header ── */
+    header {
+      text-align: center;
+      margin-bottom: 80px;
+      animation: rise 0.9s cubic-bezier(.16,1,.3,1) both;
+    }
+
+    .eyebrow {
+      font-size: 10px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      font-family: 'Lora', Georgia, serif;
+      font-size: clamp(34px, 4.5vw, 60px);
+      font-weight: 400;
+      line-height: 1.12;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--spring);
+    }
+
+    .rule {
+      width: 28px;
+      height: 1px;
+      background: var(--forest);
+      margin: 28px auto 18px;
+    }
+
+    .sub {
+      font-size: 12px;
+      color: var(--warm-gray);
+      letter-spacing: 1.5px;
+    }
+
+    /* ── Grid ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 2px;
+      max-width: 1380px;
+      margin: 0 auto;
+    }
+
+    /* ── Card ── */
+    .card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 40px 44px;
+      gap: 34px;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.38s cubic-bezier(.16,1,.3,1);
+    }
+
+    .card:hover { transform: translateY(-9px) scale(1.016); z-index: 2; }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 1px solid transparent;
+      transition: border-color 0.3s;
+      pointer-events: none;
+    }
+    .card:hover::after { border-color: rgba(245,237,216,0.1); }
+
+    /* Card backgrounds — brand palette only */
+    .c1 { background: var(--cream); }
+    .c2 { background: var(--charcoal); border: 1px solid rgba(245,237,216,0.07); }
+    .c3 { background: var(--forest); }
+    .c4 { background: var(--linen); }
+    .c5 { background: var(--deep-teal); }
+
+    /* ── Logo mark area ── */
+    .mark {
+      width: 156px;
+      height: 156px;
+      flex-shrink: 0;
+      transition: transform 0.4s ease;
+    }
+    .card:hover .mark { transform: scale(1.07); }
+
+    /* ── Card info ── */
+    .info { text-align: center; }
+
+    .num {
+      font-size: 9px;
+      letter-spacing: 4px;
+      margin-bottom: 7px;
+    }
+    .name {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 19px;
+      font-weight: 400;
+      margin-bottom: 5px;
+    }
+    .dir {
+      font-size: 9px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+    }
+
+    /* light bg → charcoal text */
+    .c1 .info, .c4 .info {
+      color: var(--charcoal);
+    }
+    .c1 .num, .c1 .dir, .c4 .num, .c4 .dir {
+      color: var(--warm-gray);
+    }
+    /* dark bg → cream text */
+    .c2 .info, .c3 .info, .c5 .info {
+      color: var(--cream);
+    }
+    .c2 .num, .c2 .dir, .c3 .num, .c3 .dir, .c5 .num, .c5 .dir {
+      color: rgba(245,237,216,0.45);
+    }
+
+    /* ── Animations ── */
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    header      { animation: rise 0.9s cubic-bezier(.16,1,.3,1) both; }
+    .card       { animation: rise 0.7s cubic-bezier(.16,1,.3,1) both; }
+    .card:nth-child(1) { animation-delay: .08s; }
+    .card:nth-child(2) { animation-delay: .16s; }
+    .card:nth-child(3) { animation-delay: .24s; }
+    .card:nth-child(4) { animation-delay: .32s; }
+    .card:nth-child(5) { animation-delay: .40s; }
+  </style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">新葉恩亭 · Newleaf Grace Hub · Brand Identity 2026</p>
+  <h1>Five Logo<br><em>Concepts</em></h1>
+  <div class="rule"></div>
+  <p class="sub">Colors: Forest #2C5F2E · Spring #7EB87E · Terracotta #B8693C · Cream #F5EDD8</p>
+</header>
+
+<div class="grid">
+
+  <!-- ════════════════════════════════════════
+       01  INK LEAF — Forest on Cream (primary)
+       Calligraphic brushstroke, East–West
+  ════════════════════════════════════════ -->
+  <div class="card c1">
+    <svg class="mark" viewBox="0 0 156 156" xmlns="http://www.w3.org/2000/svg">
+      <!-- Brushstroke leaf: Forest fill, organic asymmetric shape -->
+      <path d="M 78 11
+               C 108 17, 130 46, 128 80
+               C 126 114, 106 140, 78 149
+               C 50 140, 30 114, 28 80
+               C 26 46, 48 17, 78 11 Z"
+            fill="#2C5F2E"/>
+      <!-- Depth highlight on right edge -->
+      <path d="M 78 11 C 110 19, 134 52, 130 88 C 126 124, 106 144, 78 149"
+            fill="none" stroke="#3D7A3F" stroke-width="5" opacity="0.22"/>
+      <!-- Center vein: cream -->
+      <line x1="78" y1="13" x2="78" y2="147"
+            stroke="#F5EDD8" stroke-width="1" opacity="0.45"/>
+      <!-- Right veins — Spring tint -->
+      <path d="M 78 46 Q 94 52 106 56"  stroke="#F5EDD8" stroke-width="0.75" fill="none" opacity="0.38"/>
+      <path d="M 78 68 Q 96 74 109 77"  stroke="#F5EDD8" stroke-width="0.75" fill="none" opacity="0.38"/>
+      <path d="M 78 90 Q 95 95 107 98"  stroke="#F5EDD8" stroke-width="0.75" fill="none" opacity="0.38"/>
+      <path d="M 78 113 Q 93 117 102 119" stroke="#F5EDD8" stroke-width="0.75" fill="none" opacity="0.38"/>
+      <!-- Left veins -->
+      <path d="M 78 46 Q 62 52 50 55"  stroke="#F5EDD8" stroke-width="0.75" fill="none" opacity="0.38"/>
+      <path d="M 78 68 Q 60 74 48 76"  stroke="#F5EDD8" stroke-width="0.75" fill="none" opacity="0.38"/>
+      <path d="M 78 90 Q 61 95 50 97"  stroke="#F5EDD8" stroke-width="0.75" fill="none" opacity="0.38"/>
+      <path d="M 78 113 Q 64 117 55 119" stroke="#F5EDD8" stroke-width="0.75" fill="none" opacity="0.38"/>
+      <!-- Terracotta stem base -->
+      <circle cx="78" cy="149" r="2.8" fill="#B8693C" opacity="0.7"/>
+    </svg>
+    <div class="info">
+      <p class="num">01</p>
+      <p class="name">Ink Leaf</p>
+      <p class="dir">Calligraphic · Primary Palette</p>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════
+       02  SHELTER ARC — Cream on Charcoal
+       Two arcs = open arms / place of rest
+  ════════════════════════════════════════ -->
+  <div class="card c2">
+    <svg class="mark" viewBox="0 0 156 156" xmlns="http://www.w3.org/2000/svg">
+      <!-- Right arc: Cream — the shelter side -->
+      <path d="M 78 16 Q 142 78, 78 140"
+            fill="none" stroke="#F5EDD8" stroke-width="5" stroke-linecap="round"/>
+      <!-- Left arc: Spring — the life/growth side -->
+      <path d="M 78 16 Q 14 78, 78 140"
+            fill="none" stroke="#7EB87E" stroke-width="5" stroke-linecap="round"/>
+      <!-- Top node: Spring (growth origin) -->
+      <circle cx="78" cy="16" r="7" fill="#7EB87E"/>
+      <!-- Bottom node: Terracotta (warmth, community) -->
+      <circle cx="78" cy="140" r="4.5" fill="#B8693C" opacity="0.85"/>
+      <!-- Inner echo arcs, faint -->
+      <path d="M 78 26 Q 130 78, 78 130"
+            fill="none" stroke="#F5EDD8" stroke-width="0.9" opacity="0.1" stroke-linecap="round"/>
+      <path d="M 78 26 Q 26 78, 78 130"
+            fill="none" stroke="#7EB87E" stroke-width="0.9" opacity="0.15" stroke-linecap="round"/>
+      <!-- Horizontal balance mark -->
+      <line x1="68" y1="78" x2="88" y2="78"
+            stroke="#F5EDD8" stroke-width="0.9" opacity="0.2"/>
+    </svg>
+    <div class="info">
+      <p class="num">02</p>
+      <p class="name">Shelter Arc</p>
+      <p class="dir">Contemporary · Open Arms</p>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════
+       03  GRACE MARK — Cream on Forest
+       Swiss precision, reversed brand palette
+  ════════════════════════════════════════ -->
+  <div class="card c3">
+    <svg class="mark" viewBox="0 0 156 156" xmlns="http://www.w3.org/2000/svg">
+      <!-- Precise leaf outline: Cream stroke -->
+      <path d="M 78 18
+               C 114 18, 136 44, 136 78
+               C 136 112, 114 136, 78 136
+               C 42 136, 20 112, 20 78
+               C 20 44, 42 18, 78 18 Z"
+            fill="none" stroke="#F5EDD8" stroke-width="2.2"/>
+      <!-- Stem -->
+      <line x1="78" y1="136" x2="78" y2="150"
+            stroke="#F5EDD8" stroke-width="2.2" stroke-linecap="round"/>
+      <!-- Axis vein: Spring green -->
+      <line x1="78" y1="18" x2="78" y2="136"
+            stroke="#7EB87E" stroke-width="1" opacity="0.65"/>
+      <!-- Top ornament: Terracotta diamond -->
+      <path d="M 78 5 L 82 14 L 78 18 L 74 14 Z"
+            fill="#B8693C" opacity="0.9"/>
+      <!-- Optical centre ring -->
+      <circle cx="78" cy="78" r="4.5"
+              fill="none" stroke="#7EB87E" stroke-width="1.3"/>
+      <!-- Fine side ticks -->
+      <line x1="20" y1="78" x2="28" y2="78" stroke="#F5EDD8" stroke-width="1" opacity="0.25"/>
+      <line x1="136" y1="78" x2="128" y2="78" stroke="#F5EDD8" stroke-width="1" opacity="0.25"/>
+    </svg>
+    <div class="info">
+      <p class="num">03</p>
+      <p class="name">Grace Mark</p>
+      <p class="dir">Minimalist · Reversed Palette</p>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════
+       04  ROOTED GROWTH — Linen ground
+       Illustrated layers, earthy brand tones
+  ════════════════════════════════════════ -->
+  <div class="card c4">
+    <svg class="mark" viewBox="0 0 156 172" xmlns="http://www.w3.org/2000/svg">
+      <!-- Back leaf: Terracotta, offset right -->
+      <path d="M 88 18
+               C 118 28, 132 58, 126 92
+               C 120 126, 104 146, 86 154
+               C 70 144, 58 122, 58 94
+               C 58 66, 68 22, 88 18 Z"
+            fill="#B8693C" opacity="0.25"/>
+      <!-- Mid leaf: Forest deep -->
+      <path d="M 78 22
+               C 106 30, 120 58, 114 92
+               C 108 126, 92 144, 74 150
+               C 56 140, 44 118, 44 92
+               C 44 66, 56 26, 78 22 Z"
+            fill="#2C5F2E" opacity="0.82"/>
+      <!-- Front leaf: Spring bright -->
+      <path d="M 80 28
+               C 106 36, 118 62, 112 94
+               C 106 126, 92 142, 77 148
+               C 62 138, 52 118, 52 94
+               C 52 70, 60 34, 80 28 Z"
+            fill="#7EB87E" opacity="0.9"/>
+      <!-- Vein system: Cream -->
+      <path d="M 79 30 Q 78 90, 77 146"
+            stroke="#F5EDD8" stroke-width="1" fill="none" opacity="0.55"/>
+      <path d="M 79 56 Q 92 62 103 65"  stroke="#F5EDD8" stroke-width="0.65" fill="none" opacity="0.45"/>
+      <path d="M 79 74 Q 93 80 105 82"  stroke="#F5EDD8" stroke-width="0.65" fill="none" opacity="0.45"/>
+      <path d="M 79 93 Q 92 98 102 100" stroke="#F5EDD8" stroke-width="0.65" fill="none" opacity="0.45"/>
+      <path d="M 79 56 Q 65 62 56 64"   stroke="#F5EDD8" stroke-width="0.65" fill="none" opacity="0.45"/>
+      <path d="M 79 74 Q 64 80 54 82"   stroke="#F5EDD8" stroke-width="0.65" fill="none" opacity="0.45"/>
+      <path d="M 79 93 Q 65 97 56 99"   stroke="#F5EDD8" stroke-width="0.65" fill="none" opacity="0.45"/>
+      <!-- Stem: Forest -->
+      <path d="M 77 148 C 76 154, 74 160, 72 165"
+            stroke="#2C5F2E" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <!-- Root tendrils -->
+      <path d="M 72 165 C 66 168, 59 169, 56 171"
+            stroke="#2C5F2E" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.65"/>
+      <path d="M 72 165 C 76 168, 79 169, 81 171"
+            stroke="#7EB87E" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.6"/>
+      <!-- Tiny bud: Terracotta -->
+      <ellipse cx="72" cy="166" rx="3.5" ry="5.5"
+               fill="#B8693C" opacity="0.5" transform="rotate(-25 72 166)"/>
+    </svg>
+    <div class="info">
+      <p class="num">04</p>
+      <p class="name">Rooted Growth</p>
+      <p class="dir">Organic · Brand Layers</p>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════
+       05  PAVILION — Cream on Deep Teal
+       Arch form = 亭 (pavilion/shelter)
+  ════════════════════════════════════════ -->
+  <div class="card c5">
+    <svg class="mark" viewBox="0 0 156 156" xmlns="http://www.w3.org/2000/svg">
+      <!-- Pavilion arch: two lines meeting at apex, like a rooftop or 亭 -->
+      <!-- Left roof line -->
+      <path d="M 78 18 L 24 88"
+            stroke="#F5EDD8" stroke-width="3.5" stroke-linecap="round"/>
+      <!-- Right roof line -->
+      <path d="M 78 18 L 132 88"
+            stroke="#F5EDD8" stroke-width="3.5" stroke-linecap="round"/>
+      <!-- Floor/base line of pavilion -->
+      <line x1="24" y1="88" x2="132" y2="88"
+            stroke="#F5EDD8" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+      <!-- Left column -->
+      <line x1="40" y1="88" x2="40" y2="130"
+            stroke="#7EB87E" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Right column -->
+      <line x1="116" y1="88" x2="116" y2="130"
+            stroke="#7EB87E" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Floor slab -->
+      <line x1="32" y1="130" x2="124" y2="130"
+            stroke="#F5EDD8" stroke-width="2" stroke-linecap="round" opacity="0.45"/>
+      <!-- Leaf at apex: Forest fill, Spring outline -->
+      <ellipse cx="78" cy="14" rx="7" ry="11"
+               fill="#7EB87E" transform="rotate(0 78 14)"/>
+      <line x1="78" y1="6" x2="78" y2="22"
+            stroke="#2C5F2E" stroke-width="0.9" opacity="0.7"/>
+      <!-- Inner fine arch echo -->
+      <path d="M 78 30 L 36 88 M 78 30 L 120 88"
+            stroke="#F5EDD8" stroke-width="0.8" opacity="0.14" stroke-linecap="round"/>
+      <!-- Terracotta warm dot at ground centre -->
+      <circle cx="78" cy="130" r="3.5" fill="#B8693C" opacity="0.7"/>
+    </svg>
+    <div class="info">
+      <p class="num">05</p>
+      <p class="name">Pavilion 亭</p>
+      <p class="dir">Architectural · Grace Shelter</p>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

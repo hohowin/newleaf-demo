@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newleaf Grace Hub · Clean Minimal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      forest:'#2C5F2E', spring:'#7EB87E', terra:'#B8693C',
+      cream:'#F5EDD8', charcoal:'#2A2520', teal:'#2E5D5A',
+      linen:'#EDE4CC', wgray:'#8A8278', white2:'#F9F8F4'
+    }, fontFamily: { display:['Lora','Georgia','serif'], body:['DM Sans','system-ui','sans-serif'] } } } }
+  </script>
+  <style>
+    body { font-family:'DM Sans',system-ui,sans-serif; }
+    .reveal { opacity:0; transform:translateY(20px); transition:opacity .75s cubic-bezier(.16,1,.3,1),transform .75s cubic-bezier(.16,1,.3,1); }
+    .reveal.on { opacity:1; transform:none; }
+    .link-forest { position:relative; display:inline-block; color:#2C5F2E; }
+    .link-forest::after { content:''; position:absolute; bottom:-2px; left:0; width:100%; height:1px; background:#2C5F2E; transform:scaleX(0); transform-origin:left; transition:transform .4s ease; }
+    .link-forest:hover::after { transform:scaleX(1); }
+    .service-row { border-top:1px solid rgba(42,37,32,.08); transition:background .25s ease; }
+    .service-row:hover { background:rgba(44,95,46,.03); }
+    .accent-bar { width:3px; height:100%; background:#2C5F2E; position:absolute; left:0; top:0; transform:scaleY(0); transform-origin:top; transition:transform .35s ease; }
+    .service-row:hover .accent-bar { transform:scaleY(1); }
+    @keyframes fade { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
+  </style>
+</head>
+<body class="bg-white2 text-charcoal overflow-x-hidden">
+
+<!-- NAV — ultra clean -->
+<nav class="fixed top-0 inset-x-0 z-50 bg-white2/97 border-b border-charcoal/6" style="backdrop-filter:blur(8px)">
+  <div class="max-w-5xl mx-auto flex items-center justify-between px-8 py-5">
+    <div>
+      <p class="font-display text-charcoal text-sm tracking-tight">Newleaf Grace Hub</p>
+      <p class="text-wgray text-xs tracking-[.25em]" style="font-size:9px">新葉恩亭</p>
+    </div>
+    <div class="hidden md:flex items-center gap-10 text-xs tracking-[.15em] uppercase text-charcoal/50">
+      <a href="#services" class="hover:text-forest transition-colors">Services</a>
+      <a href="#about" class="hover:text-forest transition-colors">About</a>
+      <a href="#contact" class="hover:text-forest transition-colors">Contact</a>
+    </div>
+    <a href="#contact" class="hidden md:block text-xs tracking-[.2em] uppercase text-forest border-b border-forest pb-px hover:text-terra hover:border-terra transition-colors">
+      Visit Us
+    </a>
+  </div>
+</nav>
+
+<!-- HERO — centered, spacious -->
+<section class="min-h-screen flex items-center justify-center px-8 pt-28 pb-20 bg-white2">
+  <div class="max-w-3xl text-center">
+    <!-- Minimal leaf mark -->
+    <div class="w-10 h-10 mx-auto mb-10 opacity-0" id="h-mark" style="animation:fade .6s .05s ease both">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 4C28 6,34 14,32 22C30 30,25 35,20 36C15 35,10 30,8 22C6 14,12 6,20 4Z" fill="none" stroke="#2C5F2E" stroke-width="1.5"/>
+        <line x1="20" y1="5" x2="20" y2="35" stroke="#7EB87E" stroke-width=".8"/>
+      </svg>
+    </div>
+    <p class="text-wgray text-xs tracking-[.45em] uppercase mb-8 opacity-0" id="h-e" style="animation:fade .6s .12s ease both">
+      Mississauga · Ontario · Non-Profit
+    </p>
+    <h1 class="font-display text-charcoal leading-[1.08] mb-8 opacity-0" id="h-t" style="font-size:clamp(2.8rem,5.5vw,4.8rem);animation:fade .8s .22s ease both">
+      A Place to Rest,<br>
+      <em class="text-forest">Renew &amp; Reconnect</em>
+    </h1>
+    <!-- Single thin rule -->
+    <div class="w-16 h-px bg-charcoal/15 mx-auto my-8 opacity-0" id="h-rule" style="animation:fade .5s .55s ease both"></div>
+    <p class="text-charcoal/50 text-lg font-light leading-relaxed max-w-lg mx-auto mb-12 opacity-0" id="h-s" style="animation:fade .7s .65s ease both">
+      新葉恩亭 is a community café and support hub for the weary and burdened. Near Credit Valley Hospital, Mississauga.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-6 justify-center items-center opacity-0" id="h-c" style="animation:fade .7s .8s ease both">
+      <a href="#services" class="bg-forest text-cream text-sm tracking-[.15em] uppercase px-8 py-4 hover:bg-teal transition-colors duration-300">
+        Our Services
+      </a>
+      <a href="#about" class="link-forest text-sm tracking-[.1em]">Learn About Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- Thin divider with text -->
+<div class="bg-white2 px-8 py-4 border-y border-charcoal/6">
+  <div class="max-w-5xl mx-auto flex items-center justify-between text-wgray text-xs tracking-[.3em] uppercase">
+    <span>Community Space</span>
+    <span class="hidden sm:inline">·</span>
+    <span class="hidden sm:inline">Counselling</span>
+    <span class="hidden sm:inline">·</span>
+    <span class="hidden sm:inline">Support Groups</span>
+    <span class="hidden md:inline">·</span>
+    <span class="hidden md:inline">Workshops</span>
+    <span class="hidden md:inline">·</span>
+    <span class="hidden md:inline">Recreation</span>
+    <span class="hidden lg:inline">·</span>
+    <span class="hidden lg:inline">Collaboration</span>
+  </div>
+</div>
+
+<!-- SERVICES — clean list -->
+<section id="services" class="py-24 px-8 bg-white2">
+  <div class="max-w-5xl mx-auto">
+    <div class="flex items-end justify-between mb-14 reveal">
+      <div>
+        <p class="text-wgray text-xs tracking-[.4em] uppercase mb-3">主要服務</p>
+        <h2 class="font-display text-charcoal text-4xl md:text-5xl">Six Pillars of <em class="text-forest">Care</em></h2>
+      </div>
+      <p class="text-wgray text-xs tracking-[.2em] hidden md:block">Newleaf Grace Hub · 新葉恩亭</p>
+    </div>
+
+    <!-- Service rows -->
+    <div>
+      <div class="service-row relative pl-6 pr-4 py-7 reveal cursor-default">
+        <div class="accent-bar"></div>
+        <div class="grid md:grid-cols-[1fr_2fr_auto] gap-4 items-center">
+          <div><p class="text-wgray text-xs tracking-[.3em] uppercase">01 · 社區空間</p><h3 class="font-display text-charcoal text-xl mt-1">Community Space</h3></div>
+          <p class="text-charcoal/50 text-sm font-light leading-relaxed">A safe, accepting café environment that fosters connection and meaningful conversation, open to all who need rest.</p>
+          <span class="text-spring text-2xl font-display italic hidden md:block">→</span>
+        </div>
+      </div>
+      <div class="service-row relative pl-6 pr-4 py-7 reveal cursor-default" style="transition-delay:.05s">
+        <div class="accent-bar"></div>
+        <div class="grid md:grid-cols-[1fr_2fr_auto] gap-4 items-center">
+          <div><p class="text-wgray text-xs tracking-[.3em] uppercase">02 · 輔導關懷</p><h3 class="font-display text-charcoal text-xl mt-1">Counselling &amp; Care</h3></div>
+          <p class="text-charcoal/50 text-sm font-light leading-relaxed">Emotional and spiritual support helping individuals face life's challenges in safe, private settings.</p>
+          <span class="text-spring text-2xl font-display italic hidden md:block">→</span>
+        </div>
+      </div>
+      <div class="service-row relative pl-6 pr-4 py-7 reveal cursor-default" style="transition-delay:.1s">
+        <div class="accent-bar"></div>
+        <div class="grid md:grid-cols-[1fr_2fr_auto] gap-4 items-center">
+          <div><p class="text-wgray text-xs tracking-[.3em] uppercase">03 · 支援小組</p><h3 class="font-display text-charcoal text-xl mt-1">Support Groups</h3></div>
+          <p class="text-charcoal/50 text-sm font-light leading-relaxed">Peer groups for caregivers and families — mutual encouragement and shared resources.</p>
+          <span class="text-spring text-2xl font-display italic hidden md:block">→</span>
+        </div>
+      </div>
+      <div class="service-row relative pl-6 pr-4 py-7 reveal cursor-default" style="transition-delay:.15s">
+        <div class="accent-bar"></div>
+        <div class="grid md:grid-cols-[1fr_2fr_auto] gap-4 items-center">
+          <div><p class="text-wgray text-xs tracking-[.3em] uppercase">04 · 工作坊退修</p><h3 class="font-display text-charcoal text-xl mt-1">Workshops &amp; Retreats</h3></div>
+          <p class="text-charcoal/50 text-sm font-light leading-relaxed">Holistic growth, life skills, ESL integration, and community-building programs.</p>
+          <span class="text-spring text-2xl font-display italic hidden md:block">→</span>
+        </div>
+      </div>
+      <div class="service-row relative pl-6 pr-4 py-7 reveal cursor-default" style="transition-delay:.2s">
+        <div class="accent-bar"></div>
+        <div class="grid md:grid-cols-[1fr_2fr_auto] gap-4 items-center">
+          <div><p class="text-wgray text-xs tracking-[.3em] uppercase">05 · 康樂創意</p><h3 class="font-display text-charcoal text-xl mt-1">Recreation &amp; Creative</h3></div>
+          <p class="text-charcoal/50 text-sm font-light leading-relaxed">Arts, music, singing, and light activities — enhancing wellbeing and social connection.</p>
+          <span class="text-spring text-2xl font-display italic hidden md:block">→</span>
+        </div>
+      </div>
+      <div class="service-row relative pl-6 pr-4 py-7 border-b border-charcoal/8 reveal cursor-default" style="transition-delay:.25s">
+        <div class="accent-bar"></div>
+        <div class="grid md:grid-cols-[1fr_2fr_auto] gap-4 items-center">
+          <div><p class="text-wgray text-xs tracking-[.3em] uppercase">06 · 社區合作</p><h3 class="font-display text-charcoal text-xl mt-1">Community Collaboration</h3></div>
+          <p class="text-charcoal/50 text-sm font-light leading-relaxed">Partnering with churches and hospitals near Credit Valley to amplify our impact.</p>
+          <span class="text-spring text-2xl font-display italic hidden md:block">→</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA — stark, minimal -->
+<section id="about" class="py-28 px-8 bg-linen">
+  <div class="max-w-4xl mx-auto reveal">
+    <div class="grid md:grid-cols-2 gap-16">
+      <div>
+        <p class="text-wgray text-xs tracking-[.4em] uppercase mb-8">歡迎你 · You Are Welcome</p>
+        <h2 class="font-display text-charcoal leading-tight" style="font-size:clamp(2.4rem,4vw,3.6rem)">
+          You Don't Have to<br><em class="text-forest">Carry It Alone.</em>
+        </h2>
+      </div>
+      <div class="flex flex-col justify-end">
+        <p class="text-charcoal/55 text-base font-light leading-[1.9] mb-10">
+          Whether you're a caregiver, newcomer to Canada, or simply need a quiet place to breathe — our doors are open near Credit Valley Hospital, Mississauga.
+        </p>
+        <a href="#contact" class="self-start border-b-2 border-forest text-forest font-display text-lg italic pb-1 hover:text-terra hover:border-terra transition-colors duration-300">
+          Visit Newleaf Grace Hub →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact" class="bg-charcoal py-14 px-8 text-cream/45">
+  <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-12 mb-10">
+    <div>
+      <p class="font-display text-cream text-sm mb-1">Newleaf Grace Hub</p>
+      <p class="text-spring text-xs tracking-widest mb-4" style="font-size:9px">新葉恩亭</p>
+      <p class="text-xs font-light leading-relaxed">Non-profit. Sponsored by Mississauga Chinese Baptist Church.</p>
+    </div>
+    <div>
+      <p class="text-cream/60 text-xs tracking-widest uppercase mb-4">Services</p>
+      <ul class="space-y-2 text-xs font-light">
+        <li>Community Café Space</li><li>Counselling &amp; Pastoral Care</li><li>Support Groups</li>
+        <li>Workshops &amp; Retreats</li><li>Recreation &amp; Creative</li><li>Community Collaboration</li>
+      </ul>
+    </div>
+    <div>
+      <p class="text-cream/60 text-xs tracking-widest uppercase mb-4">Location</p>
+      <p class="text-xs font-light leading-relaxed mb-2">Near Credit Valley Hospital<br>Mississauga, Ontario</p>
+      <p class="text-xs font-light">Mon–Fri 9am–6pm</p>
+    </div>
+  </div>
+  <div class="border-t border-white/6 pt-6 flex justify-between text-xs font-light flex-wrap gap-3">
+    <p>© 2026 Newleaf Grace Hub · 新葉恩亭</p>
+    <p>Registered Canadian Non-Profit Charity</p>
+  </div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('on'); }), {threshold:.08});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

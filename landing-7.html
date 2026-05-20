@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Newleaf Grace Hub 新葉恩亭 — A Place to Rest</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          forest: '#2C5F2E',
+          spring: '#7EB87E',
+          terra: '#B8693C',
+          cream: '#F5EDD8',
+          charcoal: '#2A2520',
+          teal: '#2E5D5A',
+          linen: '#EDE4CC',
+        },
+        fontFamily: {
+          lora: ['Lora', 'serif'],
+          dm: ['"DM Sans"', 'sans-serif'],
+        }
+      }
+    }
+  }
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #FBF6ED; font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+
+  /* SVG Storybook Scene Styles */
+  .storybook-hero {
+    background: linear-gradient(180deg, #C8E6C9 0%, #A5D6A7 30%, #81C784 60%, #4CAF50 80%, #2E5D2E 100%);
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+  }
+
+  /* Sky gradient layering */
+  .sky-layer {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+      #DCEDC8 0%,
+      #C8E6C9 25%,
+      #B9D4BB 50%,
+      #8CB88E 75%,
+      #3E6B40 100%
+    );
+  }
+
+  /* Floating clouds */
+  .cloud {
+    position: absolute;
+    opacity: 0.7;
+    filter: blur(2px);
+  }
+
+  /* Illustrated ground */
+  .ground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 45%;
+    background: linear-gradient(180deg, #3E6B40 0%, #2C5F2E 40%, #1A3E1C 100%);
+  }
+
+  /* Path winding through scene */
+  .scene-path {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    background: linear-gradient(180deg, #D4A96A 0%, #C49A5A 100%);
+    height: 40%;
+    clip-path: polygon(35% 0%, 65% 0%, 80% 100%, 20% 100%);
+  }
+
+  /* Warm window glow */
+  @keyframes window-flicker {
+    0%, 100% { opacity: 0.9; }
+    50% { opacity: 0.75; }
+  }
+
+  @keyframes float-gentle {
+    0%, 100% { transform: translateY(0px) rotate(-2deg); }
+    50% { transform: translateY(-8px) rotate(2deg); }
+  }
+
+  @keyframes sway {
+    0%, 100% { transform: rotate(-3deg) translateX(0); }
+    50% { transform: rotate(3deg) translateX(5px); }
+  }
+
+  @keyframes bird-fly {
+    0% { transform: translateX(0) translateY(0) scaleX(1); }
+    25% { transform: translateX(30vw) translateY(-30px) scaleX(1); }
+    50% { transform: translateX(60vw) translateY(20px) scaleX(1); }
+    75% { transform: translateX(80vw) translateY(-10px) scaleX(-1); }
+    100% { transform: translateX(0) translateY(0) scaleX(1); }
+  }
+
+  @keyframes smoke-rise {
+    0% { transform: translateY(0) scaleX(1); opacity: 0.6; }
+    100% { transform: translateY(-40px) scaleX(1.5); opacity: 0; }
+  }
+
+  .building-window { animation: window-flicker 3s ease-in-out infinite; }
+  .leaf-float { animation: float-gentle 4s ease-in-out infinite; }
+  .tree-sway { animation: sway 5s ease-in-out infinite; transform-origin: bottom center; }
+  .bird { animation: bird-fly 18s linear infinite; }
+  .smoke { animation: smoke-rise 3s ease-out infinite; }
+
+  /* Hero text overlay */
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding-top: 8rem;
+    color: #F5EDD8;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+
+  /* Service cards — illustrated style */
+  .illus-card {
+    background: #FFFDF7;
+    border: 2px solid #E8DCC8;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    position: relative;
+  }
+  .illus-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(44,95,46,0.15);
+    border-color: #7EB87E;
+  }
+
+  .illus-card .card-illustration {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Nav */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1rem 2rem;
+    background: rgba(44, 95, 46, 0.85);
+    backdrop-filter: blur(12px);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo { font-family: 'Lora', serif; font-size: 1.1rem; color: #F5EDD8; font-style: italic; }
+  .nav-links a { color: rgba(245,237,216,0.8); font-size: 0.85rem; font-weight: 300; text-decoration: none; margin-left: 2rem; transition: color 0.3s; }
+  .nav-links a:hover { color: #F5EDD8; }
+
+  /* Section fade */
+  .fade-up { opacity: 0; transform: translateY(30px); transition: all 0.7s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* Quote banner */
+  .quote-banner {
+    background: linear-gradient(135deg, #2C5F2E 0%, #2E5D5A 100%);
+    padding: 5rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Footer */
+  footer { background: #2A2520; color: #8A8278; padding: 3rem 2rem; text-align: center; }
+  footer .footer-logo { font-family: 'Lora', serif; color: #F5EDD8; font-size: 1.3rem; margin-bottom: 1rem; }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-logo">Newleaf Grace Hub · 新葉恩亭</div>
+  <div class="nav-links">
+    <a href="#">About</a>
+    <a href="#">Services</a>
+    <a href="#">Visit</a>
+    <a href="#">Give</a>
+  </div>
+</nav>
+
+<!-- HERO — Full SVG Storybook Illustration Scene -->
+<section class="storybook-hero" style="min-height:100vh; display:flex; flex-direction:column;">
+  <div class="sky-layer"></div>
+
+  <!-- SVG Scene — Full illustration -->
+  <svg viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg"
+    style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:2;">
+
+    <!-- Sky gradient bg -->
+    <defs>
+      <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#C8E6C9"/>
+        <stop offset="40%" stop-color="#A5D6A7"/>
+        <stop offset="100%" stop-color="#558B5E"/>
+      </linearGradient>
+      <linearGradient id="groundGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#4E8B52"/>
+        <stop offset="100%" stop-color="#2A5C2C"/>
+      </linearGradient>
+      <linearGradient id="buildingGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#F5EDD8"/>
+        <stop offset="100%" stop-color="#E8DCC8"/>
+      </linearGradient>
+      <linearGradient id="roofGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#7EB87E"/>
+        <stop offset="100%" stop-color="#2C5F2E"/>
+      </linearGradient>
+      <filter id="soft-blur">
+        <feGaussianBlur stdDeviation="2"/>
+      </filter>
+      <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#FFF9C4" stop-opacity="0.8"/>
+        <stop offset="100%" stop-color="#FFF9C4" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+
+    <!-- Sky -->
+    <rect width="1200" height="700" fill="url(#skyGrad)"/>
+
+    <!-- Sun / warm glow -->
+    <circle cx="900" cy="120" r="80" fill="url(#sunGlow)"/>
+    <circle cx="900" cy="120" r="45" fill="#FFF176" opacity="0.5"/>
+
+    <!-- Distant mountains / hills -->
+    <ellipse cx="150" cy="480" rx="250" ry="120" fill="#6FAF72" opacity="0.4"/>
+    <ellipse cx="1050" cy="490" rx="220" ry="100" fill="#6FAF72" opacity="0.35"/>
+
+    <!-- Clouds -->
+    <g opacity="0.75" filter="url(#soft-blur)" class="cloud" style="animation: float-gentle 6s ease-in-out infinite; transform-origin: center;">
+      <ellipse cx="200" cy="130" rx="90" ry="35" fill="white"/>
+      <ellipse cx="260" cy="120" rx="70" ry="30" fill="white"/>
+      <ellipse cx="150" cy="140" rx="60" ry="25" fill="white"/>
+    </g>
+    <g opacity="0.65" filter="url(#soft-blur)" style="animation: float-gentle 8s ease-in-out infinite reverse; transform-origin: center;">
+      <ellipse cx="750" cy="90" rx="110" ry="40" fill="white"/>
+      <ellipse cx="820" cy="80" rx="80" ry="32" fill="white"/>
+      <ellipse cx="700" cy="100" rx="70" ry="28" fill="white"/>
+    </g>
+
+    <!-- Birds (simple V shapes) -->
+    <g class="bird" transform="translate(50, 60)">
+      <path d="M0,0 Q4,-6 8,0 Q12,-6 16,0" stroke="#2C5F2E" stroke-width="1.5" fill="none"/>
+      <path d="M20,2 Q24,-4 28,2 Q32,-4 36,2" stroke="#2C5F2E" stroke-width="1.5" fill="none"/>
+    </g>
+
+    <!-- Ground -->
+    <rect y="480" width="1200" height="220" fill="url(#groundGrad)"/>
+
+    <!-- Grass texture strokes -->
+    <g opacity="0.3" stroke="#A5D6A7" stroke-width="1.5">
+      <line x1="80" y1="480" x2="85" y2="465"/>
+      <line x1="90" y1="480" x2="87" y2="462"/>
+      <line x1="200" y1="480" x2="205" y2="466"/>
+      <line x1="350" y1="480" x2="348" y2="464"/>
+      <line x1="850" y1="480" x2="855" y2="465"/>
+      <line x1="1000" y1="480" x2="998" y2="462"/>
+      <line x1="1100" y1="480" x2="1105" y2="468"/>
+    </g>
+
+    <!-- Path / walkway -->
+    <path d="M560,700 L540,480 L660,480 L640,700 Z" fill="#D4A96A" opacity="0.7"/>
+    <path d="M565,700 L548,530 L652,530 L638,700 Z" fill="#C49A5A" opacity="0.4"/>
+
+    <!-- Main Building — Newleaf Grace Hub -->
+    <!-- Building body -->
+    <rect x="380" y="280" width="440" height="210" fill="url(#buildingGrad)" rx="4"/>
+    <!-- Roof -->
+    <polygon points="360,285 600,180 840,285" fill="url(#roofGrad)"/>
+    <!-- Chimney -->
+    <rect x="680" y="185" width="30" height="60" fill="#8CB88E"/>
+    <!-- Smoke puffs -->
+    <circle cx="695" cy="178" r="12" fill="#F0E6C8" opacity="0.5" class="smoke" style="animation-delay:0s"/>
+    <circle cx="700" cy="158" r="10" fill="#F0E6C8" opacity="0.3" class="smoke" style="animation-delay:1s"/>
+    <circle cx="690" cy="142" r="8" fill="#F0E6C8" opacity="0.2" class="smoke" style="animation-delay:2s"/>
+
+    <!-- Door -->
+    <rect x="572" y="380" width="56" height="110" fill="#B8693C" rx="28 28 4 4"/>
+    <circle cx="622" cy="437" r="5" fill="#F5EDD8"/>
+    <!-- Door arch -->
+    <path d="M572,408 Q600,370 628,408" fill="#A05A30" opacity="0.5"/>
+
+    <!-- Windows row 1 -->
+    <rect x="415" y="310" width="70" height="55" fill="#FFF9C4" rx="4" class="building-window" style="animation-delay:0.3s"/>
+    <rect x="715" y="310" width="70" height="55" fill="#FFF9C4" rx="4" class="building-window" style="animation-delay:0.7s"/>
+    <!-- Window cross -->
+    <line x1="450" y1="310" x2="450" y2="365" stroke="#C8B89A" stroke-width="2"/>
+    <line x1="415" y1="337" x2="485" y2="337" stroke="#C8B89A" stroke-width="2"/>
+    <line x1="750" y1="310" x2="750" y2="365" stroke="#C8B89A" stroke-width="2"/>
+    <line x1="715" y1="337" x2="785" y2="337" stroke="#C8B89A" stroke-width="2"/>
+
+    <!-- Windows row 2 -->
+    <rect x="430" y="395" width="55" height="45" fill="#FFF9C4" rx="4" class="building-window" style="animation-delay:0.5s"/>
+    <rect x="715" y="395" width="55" height="45" fill="#FFF9C4" rx="4" class="building-window" style="animation-delay:1s"/>
+
+    <!-- Newleaf sign above door -->
+    <rect x="510" y="290" width="180" height="35" fill="#2C5F2E" rx="4" opacity="0.9"/>
+    <text x="600" y="313" text-anchor="middle" fill="#F5EDD8" font-size="12" font-family="Georgia, serif" font-style="italic">Newleaf Grace Hub · 新葉恩亭</text>
+
+    <!-- Bushes / flower beds -->
+    <ellipse cx="400" cy="490" rx="55" ry="28" fill="#4CAF50" opacity="0.8"/>
+    <ellipse cx="800" cy="490" rx="55" ry="28" fill="#4CAF50" opacity="0.8"/>
+    <circle cx="385" cy="475" r="12" fill="#7EB87E"/>
+    <circle cx="405" cy="470" r="14" fill="#81C784"/>
+    <circle cx="425" cy="473" r="11" fill="#66BB6A"/>
+    <!-- Flowers on bushes -->
+    <circle cx="395" cy="468" r="5" fill="#FFF176"/>
+    <circle cx="415" cy="465" r="4" fill="#FFCCBC"/>
+    <circle cx="790" cy="468" r="5" fill="#FFF176"/>
+    <circle cx="808" cy="465" r="4" fill="#FFCCBC"/>
+
+    <!-- Left large tree -->
+    <rect x="175" y="330" width="22" height="160" fill="#8B5E3C"/>
+    <!-- Foliage layers -->
+    <ellipse cx="186" cy="290" rx="85" ry="65" fill="#2C5F2E" class="tree-sway" style="animation-delay:0.5s"/>
+    <ellipse cx="175" cy="250" rx="65" ry="55" fill="#3E7A40"/>
+    <ellipse cx="200" cy="260" rx="55" ry="48" fill="#4CAF50" opacity="0.7"/>
+
+    <!-- Right large tree -->
+    <rect x="1000" y="340" width="22" height="150" fill="#8B5E3C"/>
+    <ellipse cx="1011" cy="300" rx="80" ry="62" fill="#2C5F2E" class="tree-sway"/>
+    <ellipse cx="1000" cy="262" rx="62" ry="52" fill="#3E7A40"/>
+    <ellipse cx="1025" cy="270" rx="52" ry="45" fill="#4CAF50" opacity="0.7"/>
+
+    <!-- Small trees flanking building -->
+    <rect x="345" y="400" width="14" height="90" fill="#8B5E3C"/>
+    <ellipse cx="352" cy="380" rx="45" ry="40" fill="#558B5E"/>
+    <ellipse cx="348" cy="355" rx="35" ry="32" fill="#66BB6A"/>
+
+    <rect x="838" y="400" width="14" height="90" fill="#8B5E3C"/>
+    <ellipse cx="845" cy="380" rx="45" ry="40" fill="#558B5E"/>
+    <ellipse cx="841" cy="355" rx="35" ry="32" fill="#66BB6A"/>
+
+    <!-- People silhouettes on path -->
+    <!-- Person 1 -->
+    <g transform="translate(570, 450)">
+      <circle cx="0" cy="-40" r="9" fill="#B8693C"/>
+      <rect x="-7" y="-31" width="14" height="28" fill="#2C5F2E" rx="3"/>
+      <line x1="-7" y1="-25" x2="-16" y2="-12" stroke="#2C5F2E" stroke-width="3"/>
+      <line x1="7" y1="-25" x2="16" y2="-12" stroke="#2C5F2E" stroke-width="3"/>
+      <line x1="-3" y1="-3" x2="-5" y2="14" stroke="#B8693C" stroke-width="3"/>
+      <line x1="3" y1="-3" x2="5" y2="14" stroke="#B8693C" stroke-width="3"/>
+    </g>
+    <!-- Person 2 (smaller, farther) -->
+    <g transform="translate(605, 440)">
+      <circle cx="0" cy="-32" r="7" fill="#D4A96A"/>
+      <rect x="-5" y="-25" width="10" height="22" fill="#7EB87E" rx="2"/>
+      <line x1="-5" y1="-20" x2="-12" y2="-10" stroke="#7EB87E" stroke-width="2.5"/>
+      <line x1="5" y1="-20" x2="12" y2="-10" stroke="#7EB87E" stroke-width="2.5"/>
+      <line x1="-2" y1="-3" x2="-4" y2="10" stroke="#D4A96A" stroke-width="2.5"/>
+      <line x1="2" y1="-3" x2="4" y2="10" stroke="#D4A96A" stroke-width="2.5"/>
+    </g>
+
+    <!-- Leaves floating -->
+    <g class="leaf-float" transform="translate(450, 380)" style="animation-delay:0.5s">
+      <ellipse cx="0" cy="0" rx="12" ry="6" fill="#7EB87E" transform="rotate(-30)"/>
+      <line x1="0" y1="-6" x2="0" y2="6" stroke="#2C5F2E" stroke-width="1"/>
+    </g>
+    <g class="leaf-float" transform="translate(800, 360)" style="animation-delay:1.5s">
+      <ellipse cx="0" cy="0" rx="10" ry="5" fill="#4CAF50" transform="rotate(20)"/>
+      <line x1="0" y1="-5" x2="0" y2="5" stroke="#1B5E20" stroke-width="0.8"/>
+    </g>
+    <g class="leaf-float" transform="translate(300, 420)" style="animation-delay:0.8s">
+      <ellipse cx="0" cy="0" rx="11" ry="5" fill="#A5D6A7" transform="rotate(-15)"/>
+    </g>
+
+    <!-- Bench near left -->
+    <g transform="translate(280, 472)">
+      <rect x="0" y="0" width="60" height="5" fill="#8B5E3C" rx="2"/>
+      <rect x="5" y="5" width="5" height="12" fill="#8B5E3C"/>
+      <rect x="50" y="5" width="5" height="12" fill="#8B5E3C"/>
+    </g>
+
+    <!-- Hanging lantern on building -->
+    <line x1="600" y1="245" x2="600" y2="270" stroke="#8B5E3C" stroke-width="2"/>
+    <rect x="590" y="270" width="20" height="28" fill="#FFF176" rx="4" class="building-window" style="animation-delay:0.2s"/>
+    <rect x="588" y="268" width="24" height="4" fill="#8B5E3C" rx="1"/>
+    <rect x="588" y="298" width="24" height="4" fill="#8B5E3C" rx="1"/>
+  </svg>
+
+  <!-- Hero Text Overlay -->
+  <div class="hero-content" style="position:relative; z-index:10; padding: 8rem 2rem 4rem; text-align:center;">
+    <p style="font-family:'DM Sans',sans-serif; font-size:0.85rem; letter-spacing:0.2em; text-transform:uppercase; color:#A5D6A7; margin-bottom:1rem; opacity:0;" class="fade-up" id="hero-tag">Near Credit Valley Hospital · Mississauga</p>
+    <h1 style="font-family:'Lora',serif; font-size:clamp(2.5rem,6vw,4.5rem); color:#F5EDD8; line-height:1.15; margin-bottom:1.5rem; text-shadow:0 4px 20px rgba(0,0,0,0.4); opacity:0;" class="fade-up" id="hero-h1">
+      A Place to Breathe.<br>A Place to Belong.
+    </h1>
+    <p style="font-size:1.1rem; color:#C8E6C9; max-width:500px; margin:0 auto 2.5rem; line-height:1.7; opacity:0;" class="fade-up" id="hero-sub">
+      Community café and support hub for those carrying heavy burdens — all are welcome here.
+    </p>
+    <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; opacity:0;" class="fade-up" id="hero-cta">
+      <a href="#" style="background:#B8693C; color:#F5EDD8; padding:0.9rem 2.5rem; border-radius:50px; font-size:0.95rem; text-decoration:none; transition:all 0.3s; display:inline-block;" onmouseover="this.style.background='#A05A30'" onmouseout="this.style.background='#B8693C'">Visit Us Today</a>
+      <a href="#" style="border:2px solid rgba(245,237,216,0.5); color:#F5EDD8; padding:0.9rem 2.5rem; border-radius:50px; font-size:0.95rem; text-decoration:none; transition:all 0.3s; display:inline-block;" onmouseover="this.style.borderColor='#F5EDD8'" onmouseout="this.style.borderColor='rgba(245,237,216,0.5)'">Learn More</a>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div style="position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); z-index:10; text-align:center;" id="scroll-hint">
+    <p style="color:rgba(245,237,216,0.6); font-size:0.75rem; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:0.5rem;">Scroll</p>
+    <div style="width:1px; height:40px; background:linear-gradient(to bottom, rgba(245,237,216,0.5), transparent); margin:0 auto;"></div>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section id="services" style="background:#FBF6ED; padding:6rem 1rem;">
+  <div style="max-width:1100px; margin:0 auto;">
+    <div style="text-align:center; margin-bottom:4rem;" class="fade-up">
+      <p style="font-size:0.8rem; letter-spacing:0.2em; text-transform:uppercase; color:#B8693C; margin-bottom:0.75rem;">What We Offer</p>
+      <h2 style="font-family:'Lora',serif; font-size:2.5rem; color:#2A2520; margin-bottom:1rem;">Six Ways We Care</h2>
+      <div style="width:50px; height:3px; background:#7EB87E; margin:0 auto; border-radius:2px;"></div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:2rem;">
+
+      <!-- Card 1 — Café -->
+      <div class="illus-card fade-up" style="animation-delay:0.1s">
+        <div class="card-illustration" style="background:linear-gradient(135deg,#C8E6C9,#A5D6A7);">
+          <svg viewBox="0 0 200 160" width="200" height="160" xmlns="http://www.w3.org/2000/svg">
+            <rect x="60" y="80" width="80" height="60" fill="#B8693C" rx="4"/>
+            <ellipse cx="100" cy="80" rx="45" ry="15" fill="#C8793C" opacity="0.8"/>
+            <rect x="80" y="60" width="40" height="25" fill="#D4A96A" opacity="0.6" rx="2"/>
+            <ellipse cx="100" cy="62" rx="20" ry="6" fill="#FFF9E4" opacity="0.7"/>
+            <text x="100" y="117" text-anchor="middle" fill="#F5EDD8" font-size="11" font-family="Georgia,serif">CAFÉ</text>
+            <circle cx="140" cy="100" r="18" fill="#F5EDD8" opacity="0.15"/>
+            <circle cx="65" cy="105" r="12" fill="#F5EDD8" opacity="0.1"/>
+          </svg>
+        </div>
+        <div style="padding:1.75rem;">
+          <h3 style="font-family:'Lora',serif; color:#2A2520; margin-bottom:0.5rem; font-size:1.2rem;">Community Café</h3>
+          <p style="color:#6B6460; font-size:0.9rem; line-height:1.7;">Warm drinks, light bites, and a table always ready. No agenda — just rest and connection.</p>
+        </div>
+      </div>
+
+      <!-- Card 2 — Counselling -->
+      <div class="illus-card fade-up" style="animation-delay:0.2s">
+        <div class="card-illustration" style="background:linear-gradient(135deg,#EDE4CC,#D4C4A8);">
+          <svg viewBox="0 0 200 160" width="200" height="160" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="80" cy="75" r="28" fill="#B8693C" opacity="0.8"/>
+            <circle cx="120" cy="85" r="28" fill="#2C5F2E" opacity="0.7"/>
+            <circle cx="100" cy="68" r="22" fill="#7EB87E" opacity="0.6"/>
+            <!-- Hearts representing care -->
+            <path d="M100,90 C100,90 82,78 82,68 C82,62 88,58 94,62 C96,63 98,65 100,68 C102,65 104,63 106,62 C112,58 118,62 118,68 C118,78 100,90 100,90 Z" fill="white" opacity="0.9"/>
+          </svg>
+        </div>
+        <div style="padding:1.75rem;">
+          <h3 style="font-family:'Lora',serif; color:#2A2520; margin-bottom:0.5rem; font-size:1.2rem;">Pastoral Support</h3>
+          <p style="color:#6B6460; font-size:0.9rem; line-height:1.7;">Compassionate listening and spiritual care for those walking through grief, illness, or uncertainty.</p>
+        </div>
+      </div>
+
+      <!-- Card 3 — Practical Help -->
+      <div class="illus-card fade-up" style="animation-delay:0.3s">
+        <div class="card-illustration" style="background:linear-gradient(135deg,#B8E0B8,#7EB87E);">
+          <svg viewBox="0 0 200 160" width="200" height="160" xmlns="http://www.w3.org/2000/svg">
+            <!-- House / shelter icon illustrated -->
+            <polygon points="100,30 160,90 40,90" fill="#2C5F2E"/>
+            <rect x="60" y="90" width="80" height="60" fill="#F5EDD8"/>
+            <rect x="85" y="105" width="30" height="45" fill="#B8693C" rx="15 15 0 0"/>
+            <rect x="65" y="95" width="25" height="25" fill="#FFF9C4" rx="2"/>
+            <circle cx="108" cy="130" r="3" fill="#F5EDD8"/>
+          </svg>
+        </div>
+        <div style="padding:1.75rem;">
+          <h3 style="font-family:'Lora',serif; color:#2A2520; margin-bottom:0.5rem; font-size:1.2rem;">Practical Aid</h3>
+          <p style="color:#6B6460; font-size:0.9rem; line-height:1.7;">Navigation help for hospital visits, community resources, and day-to-day needs during hard seasons.</p>
+        </div>
+      </div>
+
+      <!-- Card 4 — Prayer -->
+      <div class="illus-card fade-up" style="animation-delay:0.4s">
+        <div class="card-illustration" style="background:linear-gradient(135deg,#2C5F2E,#2E5D5A);">
+          <svg viewBox="0 0 200 160" width="200" height="160" xmlns="http://www.w3.org/2000/svg">
+            <!-- Praying hands -->
+            <path d="M85,110 C85,110 75,85 78,65 C80,50 90,45 95,55 L100,80 L105,55 C110,45 120,50 122,65 C125,85 115,110 115,110 Z" fill="#F5EDD8" opacity="0.9"/>
+            <path d="M100,80 L100,115" stroke="#EDE4CC" stroke-width="2"/>
+            <!-- Rays of light -->
+            <line x1="100" y1="35" x2="100" y2="20" stroke="#FFF176" stroke-width="2" opacity="0.6"/>
+            <line x1="120" y1="42" x2="132" y2="30" stroke="#FFF176" stroke-width="2" opacity="0.5"/>
+            <line x1="80" y1="42" x2="68" y2="30" stroke="#FFF176" stroke-width="2" opacity="0.5"/>
+          </svg>
+        </div>
+        <div style="padding:1.75rem;">
+          <h3 style="font-family:'Lora',serif; color:#2A2520; margin-bottom:0.5rem; font-size:1.2rem;">Prayer & Reflection</h3>
+          <p style="color:#6B6460; font-size:0.9rem; line-height:1.7;">A quiet corner for prayer, meditation, or simply sitting in stillness — whatever you need.</p>
+        </div>
+      </div>
+
+      <!-- Card 5 — Community Events -->
+      <div class="illus-card fade-up" style="animation-delay:0.5s">
+        <div class="card-illustration" style="background:linear-gradient(135deg,#FFCCBC,#B8693C);">
+          <svg viewBox="0 0 200 160" width="200" height="160" xmlns="http://www.w3.org/2000/svg">
+            <!-- Group of people -->
+            <circle cx="70" cy="65" r="18" fill="#F5EDD8"/>
+            <circle cx="100" cy="55" r="20" fill="#EDE4CC"/>
+            <circle cx="130" cy="65" r="18" fill="#F5EDD8"/>
+            <rect x="52" y="83" width="36" height="55" fill="#2C5F2E" rx="8"/>
+            <rect x="82" y="75" width="36" height="63" fill="#7EB87E" rx="8"/>
+            <rect x="112" y="83" width="36" height="55" fill="#2E5D5A" rx="8"/>
+          </svg>
+        </div>
+        <div style="padding:1.75rem;">
+          <h3 style="font-family:'Lora',serif; color:#2A2520; margin-bottom:0.5rem; font-size:1.2rem;">Group Gatherings</h3>
+          <p style="color:#6B6460; font-size:0.9rem; line-height:1.7;">Regular circles, workshops, and shared meals — because healing is rarely a solo journey.</p>
+        </div>
+      </div>
+
+      <!-- Card 6 — Family Support -->
+      <div class="illus-card fade-up" style="animation-delay:0.6s">
+        <div class="card-illustration" style="background:linear-gradient(135deg,#EDE4CC,#C8B898);">
+          <svg viewBox="0 0 200 160" width="200" height="160" xmlns="http://www.w3.org/2000/svg">
+            <!-- Big leaf with small leaf -->
+            <ellipse cx="90" cy="90" rx="50" ry="38" fill="#2C5F2E" transform="rotate(-15,90,90)"/>
+            <line x1="90" y1="52" x2="90" y2="128" stroke="#1A3E1C" stroke-width="2.5"/>
+            <line x1="90" y1="75" x2="115" y2="65" stroke="#1A3E1C" stroke-width="1.5"/>
+            <line x1="90" y1="95" x2="65" y2="88" stroke="#1A3E1C" stroke-width="1.5"/>
+            <!-- Small leaf -->
+            <ellipse cx="130" cy="70" rx="25" ry="18" fill="#7EB87E" transform="rotate(20,130,70)"/>
+            <line x1="130" y1="52" x2="130" y2="88" stroke="#2C5F2E" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div style="padding:1.75rem;">
+          <h3 style="font-family:'Lora',serif; color:#2A2520; margin-bottom:0.5rem; font-size:1.2rem;">Family Care</h3>
+          <p style="color:#6B6460; font-size:0.9rem; line-height:1.7;">Support for caregivers and families — you don't need to hold everyone alone.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Scripture Quote -->
+<section class="quote-banner">
+  <div style="max-width:700px; margin:0 auto; text-align:center; position:relative; z-index:2;" class="fade-up">
+    <div style="font-size:4rem; color:rgba(126,184,126,0.3); font-family:'Lora',serif; line-height:1; margin-bottom:1rem;">"</div>
+    <p style="font-family:'Lora',serif; font-size:clamp(1.3rem,3vw,1.8rem); color:#F5EDD8; line-height:1.65; font-style:italic; margin-bottom:1.5rem;">
+      Come to me, all who are weary and burdened,<br>and I will give you rest.
+    </p>
+    <p style="color:#7EB87E; font-size:0.9rem; letter-spacing:0.1em;">— Matthew 11:28</p>
+  </div>
+  <!-- Background leaf ornament -->
+  <svg style="position:absolute; right:5%; bottom:-10%; opacity:0.06; width:300px;" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="100" cy="100" rx="90" ry="70" fill="#F5EDD8" transform="rotate(-30,100,100)"/>
+    <line x1="100" y1="30" x2="100" y2="170" stroke="#F5EDD8" stroke-width="4"/>
+    <line x1="100" y1="80" x2="150" y2="65" stroke="#F5EDD8" stroke-width="2"/>
+    <line x1="100" y1="110" x2="50" y2="98" stroke="#F5EDD8" stroke-width="2"/>
+  </svg>
+</section>
+
+<!-- CTA Section -->
+<section style="background:#F5EDD8; padding:6rem 1rem; text-align:center;">
+  <div class="fade-up" style="max-width:600px; margin:0 auto;">
+    <h2 style="font-family:'Lora',serif; font-size:2.2rem; color:#2A2520; margin-bottom:1rem;">You Are Welcome Here</h2>
+    <p style="color:#6B6460; line-height:1.7; margin-bottom:2.5rem; font-size:1rem;">
+      No appointment needed. No criteria to meet. Just come as you are —<br>we will be glad you did.
+    </p>
+    <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+      <a href="#" style="background:#2C5F2E; color:#F5EDD8; padding:1rem 2.5rem; border-radius:50px; text-decoration:none; font-size:0.95rem; transition:background 0.3s;" onmouseover="this.style.background='#1A3E1C'" onmouseout="this.style.background='#2C5F2E'">Find Us</a>
+      <a href="#" style="background:#B8693C; color:#F5EDD8; padding:1rem 2.5rem; border-radius:50px; text-decoration:none; font-size:0.95rem; transition:background 0.3s;" onmouseover="this.style.background='#A05A30'" onmouseout="this.style.background='#B8693C'">Volunteer</a>
+    </div>
+    <p style="margin-top:2.5rem; color:#8A8278; font-size:0.85rem;">
+      Open Mon–Sat · 9 AM – 5 PM · Near Credit Valley Hospital, Mississauga
+    </p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p class="footer-logo">Newleaf Grace Hub · 新葉恩亭</p>
+  <p style="font-size:0.85rem; margin-bottom:0.5rem;">Mississauga, Ontario · ho1howin@gmail.com</p>
+  <p style="font-size:0.78rem; opacity:0.5;">© 2026 Newleaf Grace Hub. Registered Canadian Non-Profit.</p>
+</footer>
+
+<script>
+  // Staggered hero reveal
+  const heroEls = [
+    {id:'hero-tag', delay:300},
+    {id:'hero-h1', delay:600},
+    {id:'hero-sub', delay:900},
+    {id:'hero-cta', delay:1200},
+  ];
+  heroEls.forEach(({id, delay}) => {
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; el.style.transition = 'all 0.8s ease'; }
+    }, delay);
+  });
+
+  // Scroll fade-up
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Hide scroll hint on scroll
+  window.addEventListener('scroll', () => {
+    const hint = document.getElementById('scroll-hint');
+    if (hint && window.scrollY > 50) hint.style.opacity = '0';
+  }, {passive:true});
+</script>
+</body>
+</html>

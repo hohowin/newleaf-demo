@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newleaf Grace Hub · Organic Nature</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      forest:'#2C5F2E', spring:'#7EB87E', terra:'#B8693C',
+      cream:'#F5EDD8', charcoal:'#2A2520', teal:'#2E5D5A',
+      linen:'#EDE4CC', wgray:'#8A8278'
+    }, fontFamily: { display:['Lora','Georgia','serif'], body:['DM Sans','system-ui','sans-serif'] } } } }
+  </script>
+  <style>
+    body { font-family:'DM Sans',system-ui,sans-serif; }
+    .blob-a { border-radius:60% 40% 30% 70%/60% 30% 70% 40%; }
+    .blob-b { border-radius:40% 60% 70% 30%/30% 60% 40% 70%; }
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease,transform .7s ease; }
+    .reveal.on { opacity:1; transform:translateY(0); }
+    .card-hover { transition:transform .3s ease,box-shadow .3s ease; }
+    .card-hover:hover { transform:translateY(-6px); box-shadow:0 20px 40px rgba(44,95,46,.12); }
+    @keyframes float { 0%,100%{transform:translateY(0) rotate(-2deg)} 50%{transform:translateY(-12px) rotate(2deg)} }
+    .float { animation:float 6s ease-in-out infinite; }
+    @keyframes grain { 0%,100%{transform:translate(0,0)} 10%{transform:translate(-1%,-1%)} 30%{transform:translate(1%,0)} 50%{transform:translate(0,1%)} 70%{transform:translate(-1%,0)} 90%{transform:translate(1%,-1%)} }
+    .grain::before { content:''; position:absolute; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); opacity:.06; animation:grain 8s steps(2) infinite; pointer-events:none; }
+  </style>
+</head>
+<body class="bg-cream text-charcoal overflow-x-hidden">
+
+<!-- NAV -->
+<nav class="fixed top-0 inset-x-0 z-50 flex items-center justify-between px-8 py-4" style="background:rgba(44,95,46,.96);backdrop-filter:blur(12px)">
+  <div class="flex items-center gap-3">
+    <svg width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M15 2C22 4,28 11,26 19C24 27,19 30,15 30C11 30,6 27,4 19C2 11,8 4,15 2Z" fill="#7EB87E"/><line x1="15" y1="3" x2="15" y2="29" stroke="#2C5F2E" stroke-width=".8"/></svg>
+    <div><p class="font-display text-cream font-medium leading-none">Newleaf Grace Hub</p><p class="text-spring text-xs tracking-[.25em]">新葉恩亭</p></div>
+  </div>
+  <div class="hidden md:flex items-center gap-7 text-cream/80 text-sm">
+    <a href="#services" class="hover:text-spring transition-colors">Services</a>
+    <a href="#about" class="hover:text-spring transition-colors">About</a>
+    <a href="#contact" class="bg-terra text-cream px-5 py-2 rounded-full hover:brightness-110 transition-all">Visit Us</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden grain" style="background:linear-gradient(140deg,#1A3D1C 0%,#2C5F2E 55%,#2E5D5A 100%)">
+  <div class="absolute inset-0 pointer-events-none overflow-hidden">
+    <div class="blob-a absolute -top-40 -right-40 w-[500px] h-[500px] opacity-[.12]" style="background:#7EB87E"></div>
+    <div class="blob-b absolute bottom-0 -left-32 w-96 h-96 opacity-[.10]" style="background:#B8693C"></div>
+    <!-- Decorative large leaf -->
+    <svg class="absolute right-8 top-1/2 -translate-y-1/2 opacity-[.08] float" width="380" height="500" viewBox="0 0 160 200" fill="none">
+      <path d="M80 10C120 20,148 60,144 100C140 140,116 175,80 185C44 175,20 140,16 100C12 60,40 20,80 10Z" fill="#F5EDD8"/>
+      <line x1="80" y1="12" x2="80" y2="183" stroke="#2C5F2E" stroke-width="2"/>
+    </svg>
+  </div>
+  <div id="leaves" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
+  <div class="relative z-10 text-center px-6 max-w-4xl mx-auto pt-20">
+    <p class="text-spring text-xs tracking-[.35em] uppercase mb-7 font-body opacity-0" id="h-ey">Mississauga · Ontario · Canada</p>
+    <h1 class="font-display text-cream text-5xl md:text-[4.5rem] leading-[1.06] mb-8 opacity-0" id="h-t">
+      A Place to <em>Rest,</em><br>Renew &amp; Reconnect
+    </h1>
+    <p class="text-cream/65 text-lg font-light max-w-2xl mx-auto mb-12 leading-relaxed opacity-0" id="h-s">
+      新葉恩亭 welcomes the weary and burdened — a community café and support hub where you find care, connection, and the strength to begin again.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center opacity-0" id="h-c">
+      <a href="#services" class="bg-spring text-charcoal px-8 py-4 rounded-full font-medium hover:bg-cream transition-all duration-300 hover:scale-105">Our Services</a>
+      <a href="#contact" class="border border-cream/35 text-cream px-8 py-4 rounded-full font-light hover:bg-cream/10 transition-all duration-300">Near Credit Valley Hospital</a>
+    </div>
+  </div>
+  <div class="absolute bottom-0 inset-x-0 pointer-events-none">
+    <svg viewBox="0 0 1440 90" fill="none" preserveAspectRatio="none" style="display:block;width:100%;height:90px">
+      <path d="M0 90Q360 20 720 55Q1080 90 1440 25L1440 90Z" fill="#F5EDD8"/>
+    </svg>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="py-24 px-6 bg-cream">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <p class="text-terra text-xs tracking-[.4em] uppercase mb-4">What We Offer</p>
+      <h2 class="font-display text-forest text-4xl md:text-5xl mb-4">Six Pillars of <em>Care</em></h2>
+      <div class="w-10 h-px bg-spring mx-auto"></div>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div class="card-hover reveal bg-white rounded-3xl p-8 border border-linen">
+        <div class="w-12 h-12 rounded-2xl bg-spring/20 flex items-center justify-center mb-5">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2C17 3.5,21 8,19.5 13C18 18,14 21,12 22C10 21,6 18,4.5 13C3 8,7 3.5,12 2Z" fill="#2C5F2E"/></svg>
+        </div>
+        <h3 class="font-display text-forest text-xl mb-1">社區空間</h3>
+        <p class="text-spring text-xs tracking-widest mb-3">Community Space</p>
+        <p class="text-wgray text-sm leading-relaxed">A safe café environment that fosters connection and meaningful conversation, open to all.</p>
+      </div>
+      <div class="card-hover reveal bg-white rounded-3xl p-8 border border-linen" style="transition-delay:.08s">
+        <div class="w-12 h-12 rounded-2xl bg-terra/15 flex items-center justify-center mb-5">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="5" stroke="#B8693C" stroke-width="1.5" fill="none"/><path d="M4 22C4 17,20 17,20 22" stroke="#B8693C" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+        </div>
+        <h3 class="font-display text-forest text-xl mb-1">輔導關懷</h3>
+        <p class="text-terra text-xs tracking-widest mb-3">Counselling &amp; Care</p>
+        <p class="text-wgray text-sm leading-relaxed">Emotional and spiritual support in safe, private spaces for life's challenges.</p>
+      </div>
+      <div class="card-hover reveal bg-white rounded-3xl p-8 border border-linen" style="transition-delay:.16s">
+        <div class="w-12 h-12 rounded-2xl bg-teal/15 flex items-center justify-center mb-5">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="7" cy="9" r="3.5" stroke="#2E5D5A" stroke-width="1.3" fill="none"/><circle cx="17" cy="9" r="3.5" stroke="#2E5D5A" stroke-width="1.3" fill="none"/><path d="M1 22C1 17,12 17,12 22" stroke="#2E5D5A" stroke-width="1.3" fill="none"/><path d="M12 22C12 17,23 17,23 22" stroke="#2E5D5A" stroke-width="1.3" fill="none"/></svg>
+        </div>
+        <h3 class="font-display text-forest text-xl mb-1">支援小組</h3>
+        <p class="text-teal text-xs tracking-widest mb-3">Support Groups</p>
+        <p class="text-wgray text-sm leading-relaxed">Peer groups for caregivers and families — mutual encouragement and resource sharing.</p>
+      </div>
+      <div class="card-hover reveal bg-white rounded-3xl p-8 border border-linen" style="transition-delay:.08s">
+        <div class="w-12 h-12 rounded-2xl bg-spring/20 flex items-center justify-center mb-5">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="14" rx="2" stroke="#2C5F2E" stroke-width="1.3" fill="none"/><line x1="3" y1="9" x2="21" y2="9" stroke="#2C5F2E" stroke-width="1.3"/><line x1="9" y1="21" x2="15" y2="21" stroke="#2C5F2E" stroke-width="1.3"/><line x1="12" y1="18" x2="12" y2="21" stroke="#2C5F2E" stroke-width="1.3"/></svg>
+        </div>
+        <h3 class="font-display text-forest text-xl mb-1">工作坊退修</h3>
+        <p class="text-spring text-xs tracking-widest mb-3">Workshops &amp; Retreats</p>
+        <p class="text-wgray text-sm leading-relaxed">Holistic growth, ESL integration, and community-building programs.</p>
+      </div>
+      <div class="card-hover reveal bg-white rounded-3xl p-8 border border-linen" style="transition-delay:.16s">
+        <div class="w-12 h-12 rounded-2xl bg-terra/15 flex items-center justify-center mb-5">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2C16 4,20 9,18 14C16 20,13 22,12 22C11 22,8 20,6 14C4 9,8 4,12 2Z" stroke="#B8693C" stroke-width="1.3" fill="none"/><path d="M8 11L10 13L16 8" stroke="#B8693C" stroke-width="1.3" stroke-linecap="round"/></svg>
+        </div>
+        <h3 class="font-display text-forest text-xl mb-1">康樂創意</h3>
+        <p class="text-terra text-xs tracking-widest mb-3">Recreation &amp; Creative</p>
+        <p class="text-wgray text-sm leading-relaxed">Arts, music, singing, and pickleball — wellbeing and social connection.</p>
+      </div>
+      <div class="card-hover reveal bg-white rounded-3xl p-8 border border-linen" style="transition-delay:.24s">
+        <div class="w-12 h-12 rounded-2xl bg-teal/15 flex items-center justify-center mb-5">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L22 7V17L12 22L2 17V7Z" stroke="#2E5D5A" stroke-width="1.3" fill="none"/><line x1="12" y1="2" x2="12" y2="22" stroke="#2E5D5A" stroke-width=".7" opacity=".5"/><line x1="2" y1="7" x2="22" y2="17" stroke="#2E5D5A" stroke-width=".7" opacity=".5"/><line x1="22" y1="7" x2="2" y2="17" stroke="#2E5D5A" stroke-width=".7" opacity=".5"/></svg>
+        </div>
+        <h3 class="font-display text-forest text-xl mb-1">社區合作</h3>
+        <p class="text-teal text-xs tracking-widest mb-3">Community Collaboration</p>
+        <p class="text-wgray text-sm leading-relaxed">Partnering with churches &amp; hospitals near Credit Valley to amplify care.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="about" class="py-28 px-6 relative overflow-hidden grain" style="background:linear-gradient(135deg,#2C5F2E,#2E5D5A)">
+  <div class="absolute inset-0 pointer-events-none overflow-hidden">
+    <div class="blob-a absolute -top-24 -left-24 w-80 h-80 opacity-[.08]" style="background:#7EB87E"></div>
+    <div class="blob-b absolute -bottom-24 -right-24 w-80 h-80 opacity-[.08]" style="background:#B8693C"></div>
+  </div>
+  <div class="relative max-w-3xl mx-auto text-center reveal">
+    <p class="text-spring text-xs tracking-[.4em] uppercase mb-6">Come As You Are · 歡迎你</p>
+    <h2 class="font-display text-cream text-4xl md:text-5xl mb-6 leading-tight">You Don't Have to<br><em>Carry It Alone</em></h2>
+    <p class="text-cream/65 text-lg leading-relaxed mb-10">Whether you're a caregiver, a newcomer to Canada, or simply need a quiet place to breathe — our doors are open near Credit Valley Hospital.</p>
+    <a href="#contact" class="inline-block bg-terra text-cream px-10 py-4 rounded-full font-medium text-lg hover:brightness-110 hover:scale-105 transition-all duration-300 shadow-lg">Visit Newleaf Grace Hub →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact" class="bg-charcoal py-16 px-6 text-cream/55">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-12 mb-10">
+    <div>
+      <div class="flex items-center gap-3 mb-4">
+        <svg width="26" height="26" viewBox="0 0 30 30" fill="none"><path d="M15 2C22 4,28 11,26 19C24 27,19 30,15 30C11 30,6 27,4 19C2 11,8 4,15 2Z" fill="#7EB87E"/></svg>
+        <div><p class="font-display text-cream text-sm">Newleaf Grace Hub</p><p class="text-spring text-xs tracking-widest">新葉恩亭</p></div>
+      </div>
+      <p class="text-sm leading-relaxed">A welcoming community space for the weary and burdened. Sponsored by Mississauga Chinese Baptist Church.</p>
+    </div>
+    <div>
+      <h4 class="text-cream text-xs tracking-[.3em] uppercase mb-4">Our Services</h4>
+      <ul class="space-y-2 text-sm">
+        <li>Community Café Space</li><li>Counselling &amp; Pastoral Care</li><li>Support Groups</li>
+        <li>Workshops &amp; Retreats</li><li>Recreation &amp; Creative</li><li>Community Collaboration</li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="text-cream text-xs tracking-[.3em] uppercase mb-4">Find Us</h4>
+      <p class="text-sm leading-relaxed mb-3">Near Credit Valley Hospital<br>Mississauga, Ontario, Canada</p>
+      <p class="text-sm">Mon–Fri 9am–6pm<br>Evenings &amp; Weekends: Programs</p>
+    </div>
+  </div>
+  <div class="border-t border-white/8 pt-8 flex flex-col md:flex-row justify-between text-xs gap-3">
+    <p>© 2026 Newleaf Grace Hub · 新葉恩亭</p>
+    <p>Registered Canadian Non-Profit Charity</p>
+  </div>
+</footer>
+
+<script>
+anime.timeline({ easing:'easeOutExpo' })
+  .add({ targets:'#h-ey', opacity:[0,1], translateY:[16,0], duration:700 })
+  .add({ targets:'#h-t',  opacity:[0,1], translateY:[28,0], duration:900 }, '-=400')
+  .add({ targets:'#h-s',  opacity:[0,1], translateY:[18,0], duration:700 }, '-=500')
+  .add({ targets:'#h-c',  opacity:[0,1], translateY:[16,0], duration:700 }, '-=400');
+
+// Floating leaves
+const lc = document.getElementById('leaves');
+for (let i = 0; i < 20; i++) {
+  const d = document.createElement('div');
+  const s = Math.random()*18+8;
+  d.style.cssText = `position:absolute;left:${Math.random()*100}%;top:${Math.random()*100}%;pointer-events:none;opacity:0`;
+  d.innerHTML = `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none"><path d="M12 2C17 3.5,21 8,19.5 13C18 18,14 21,12 22C10 21,6 18,4.5 13C3 8,7 3.5,12 2Z" fill="#7EB87E" opacity="${Math.random()*.25+.1}"/></svg>`;
+  lc.appendChild(d);
+}
+anime({ targets:'#leaves div', translateY:[0,anime.stagger([-280,-520],{from:'random'})], rotate:anime.stagger([-50,50],{from:'random'}), opacity:[{value:[0,.5],duration:400},{value:0,duration:2500}], duration:anime.stagger([4000,7000],{from:'random'}), delay:anime.stagger(300,{start:0}), loop:true, easing:'easeInOutSine' });
+
+// Scroll reveal
+const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('on'); }), {threshold:.12});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

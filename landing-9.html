@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Newleaf Grace Hub 新葉恩亭 — Watercolour</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          forest: '#2C5F2E',
+          spring: '#7EB87E',
+          terra: '#B8693C',
+          cream: '#F5EDD8',
+          charcoal: '#2A2520',
+          teal: '#2E5D5A',
+          linen: '#EDE4CC',
+        },
+        fontFamily: {
+          lora: ['Lora', 'serif'],
+          dm: ['"DM Sans"', 'sans-serif'],
+        }
+      }
+    }
+  }
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'DM Sans',sans-serif; background:#FAF6EE; overflow-x:hidden; }
+
+  /* ==============================
+     WATERCOLOUR / PAINTERLY SYSTEM
+  ============================== */
+
+  /* Paper texture layer */
+  body::before {
+    content:'';
+    position:fixed; inset:0; z-index:0;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events:none;
+    opacity:1;
+  }
+
+  /* Watercolour wash blobs */
+  .wc-blob {
+    position:absolute;
+    border-radius:60% 40% 55% 45% / 50% 55% 45% 55%;
+    filter:blur(45px);
+    mix-blend-mode:multiply;
+    pointer-events:none;
+  }
+  @keyframes morph-blob {
+    0%,100% { border-radius:60% 40% 55% 45% / 50% 55% 45% 55%; }
+    33% { border-radius:45% 55% 40% 60% / 55% 45% 60% 40%; }
+    66% { border-radius:55% 45% 65% 35% / 45% 60% 40% 55%; }
+  }
+  .wc-blob { animation:morph-blob 12s ease-in-out infinite; }
+  .wc-blob:nth-child(2) { animation-delay:-4s; animation-duration:15s; }
+  .wc-blob:nth-child(3) { animation-delay:-8s; animation-duration:10s; }
+
+  /* Page-level wrapper */
+  .page { position:relative; z-index:1; }
+
+  /* Nav */
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    padding:1.25rem 3rem;
+    background:rgba(250,246,238,0.85);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(44,95,46,0.1);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .nav-logo { font-family:'Lora',serif; color:#2C5F2E; font-style:italic; font-size:1.05rem; }
+  .nav-links a { color:#5A5450; font-size:0.85rem; margin-left:2rem; text-decoration:none; transition:color 0.3s; }
+  .nav-links a:hover { color:#2C5F2E; }
+
+  /* ==============================
+     WATERCOLOUR HERO
+  ============================== */
+  .wc-hero {
+    min-height:100vh;
+    position:relative;
+    display:flex; align-items:center;
+    overflow:hidden;
+  }
+
+  /* Full hero watercolour wash background */
+  .wc-hero-wash {
+    position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 40%, rgba(126,184,126,0.35) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 50% at 80% 60%, rgba(184,105,60,0.2) 0%, transparent 70%),
+      radial-gradient(ellipse 70% 80% at 50% 20%, rgba(44,95,46,0.15) 0%, transparent 65%),
+      radial-gradient(ellipse 90% 70% at 70% 80%, rgba(46,93,90,0.18) 0%, transparent 65%);
+    filter:blur(30px);
+  }
+
+  /* Watercolour painted text effect */
+  .wc-headline {
+    font-family:'Lora',serif;
+    font-size:clamp(3rem,7vw,5.5rem);
+    color:#2A2520;
+    line-height:1.1;
+    position:relative;
+    display:inline-block;
+  }
+  .wc-headline em {
+    color:#2C5F2E;
+    font-style:italic;
+    position:relative;
+  }
+  .wc-headline em::after {
+    content:'';
+    position:absolute;
+    bottom:-4px; left:-8px; right:-8px; height:18px;
+    background:rgba(126,184,126,0.3);
+    filter:blur(6px);
+    border-radius:50%;
+    z-index:-1;
+  }
+
+  /* Watercolour splash brush strokes — SVG overlays */
+  .brush-stroke {
+    position:absolute;
+    pointer-events:none;
+    opacity:0.12;
+  }
+
+  /* ==============================
+     SERVICE CARDS — Watercolour
+  ============================== */
+  .wc-card {
+    background:rgba(255,253,248,0.7);
+    border:1px solid rgba(126,184,126,0.2);
+    border-radius:24px;
+    padding:0; overflow:hidden;
+    position:relative;
+    transition:all 0.4s ease;
+    backdrop-filter:blur(4px);
+  }
+  .wc-card:hover {
+    transform:translateY(-6px);
+    border-color:rgba(126,184,126,0.5);
+    box-shadow:0 16px 48px rgba(44,95,46,0.12);
+  }
+  .wc-card-top {
+    height:140px;
+    position:relative;
+    overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+  }
+  /* Individual card colour washes */
+  .wash-1 { background:radial-gradient(ellipse, rgba(126,184,126,0.45), rgba(44,95,46,0.15)); }
+  .wash-2 { background:radial-gradient(ellipse, rgba(184,105,60,0.35), rgba(212,169,106,0.2)); }
+  .wash-3 { background:radial-gradient(ellipse, rgba(46,93,90,0.4), rgba(44,95,46,0.2)); }
+  .wash-4 { background:radial-gradient(ellipse, rgba(237,228,204,0.8), rgba(200,184,152,0.4)); }
+  .wash-5 { background:radial-gradient(ellipse, rgba(165,214,167,0.5), rgba(126,184,126,0.25)); }
+  .wash-6 { background:radial-gradient(ellipse, rgba(212,169,106,0.4), rgba(237,228,204,0.6)); }
+  .wc-card-body { padding:1.5rem 1.75rem 1.75rem; }
+
+  /* Divider watercolour wave */
+  .wc-wave-div {
+    position:relative;
+    height:80px;
+    overflow:hidden;
+  }
+
+  /* Quote / pull text */
+  .wc-quote-section {
+    padding:6rem 3rem;
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(135deg,
+      rgba(44,95,46,0.06) 0%,
+      rgba(46,93,90,0.08) 50%,
+      rgba(126,184,126,0.05) 100%
+    );
+  }
+
+  /* Large bg photo with painted overlay */
+  .painted-photo-section {
+    position:relative;
+    height:500px;
+    overflow:hidden;
+  }
+  .painted-photo-section img {
+    width:100%; height:100%; object-fit:cover;
+  }
+  .painted-photo-section .paint-overlay {
+    position:absolute; inset:0;
+    background:
+      linear-gradient(135deg, rgba(44,95,46,0.7) 0%, rgba(46,93,90,0.5) 50%, rgba(184,105,60,0.3) 100%);
+    mix-blend-mode:multiply;
+  }
+  .painted-photo-section .photo-caption {
+    position:absolute;
+    inset:0;
+    display:flex; align-items:center; justify-content:center;
+    text-align:center;
+    padding:2rem;
+  }
+
+  /* Tag pill */
+  .tag { display:inline-block; background:rgba(44,95,46,0.1); color:#2C5F2E; padding:0.35rem 0.9rem; border-radius:50px; font-size:0.78rem; letter-spacing:0.12em; text-transform:uppercase; border:1px solid rgba(44,95,46,0.2); margin-bottom:1rem; }
+
+  /* Reveal animations */
+  .wc-reveal { opacity:0; transform:translateY(20px); transition:all 0.7s ease; }
+  .wc-reveal.on { opacity:1; transform:translateY(0); }
+
+  /* CTA */
+  .wc-cta {
+    background:linear-gradient(135deg, rgba(44,95,46,0.08), rgba(126,184,126,0.12));
+    padding:5rem 3rem;
+    text-align:center;
+  }
+
+  footer { background:#2A2520; color:#8A8278; padding:3rem; text-align:center; }
+  footer .brand { font-family:'Lora',serif; color:#EDE4CC; font-size:1.25rem; margin-bottom:0.5rem; }
+
+  @media(max-width:768px) {
+    nav { padding:1rem 1.5rem; }
+    .nav-links { display:none; }
+    .wc-hero { padding:2rem 1.5rem; flex-direction:column; }
+    .wc-quote-section { padding:4rem 1.5rem; }
+    .wc-cta { padding:4rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- Nav -->
+<nav>
+  <div class="nav-logo">Newleaf Grace Hub · 新葉恩亭</div>
+  <div class="nav-links">
+    <a href="#">About</a>
+    <a href="#">Services</a>
+    <a href="#">Visit</a>
+    <a href="#">Give</a>
+  </div>
+</nav>
+
+<!-- HERO — Watercolour Wash -->
+<section class="wc-hero">
+  <!-- Background watercolour washes -->
+  <div class="wc-hero-wash"></div>
+
+  <!-- Animated blobs -->
+  <div class="wc-blob" style="width:600px;height:500px;background:rgba(126,184,126,0.25);top:-100px;right:-80px;"></div>
+  <div class="wc-blob" style="width:500px;height:400px;background:rgba(184,105,60,0.15);bottom:-80px;left:10%;"></div>
+  <div class="wc-blob" style="width:400px;height:350px;background:rgba(46,93,90,0.18);top:30%;right:20%;"></div>
+
+  <!-- Brush stroke SVG ornaments -->
+  <svg class="brush-stroke" style="top:10%;left:60%;width:300px;" viewBox="0 0 300 80" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10,40 Q80,10 160,40 Q240,70 290,35" stroke="#2C5F2E" stroke-width="18" fill="none" stroke-linecap="round" opacity="0.5"/>
+  </svg>
+  <svg class="brush-stroke" style="bottom:15%;left:5%;width:200px; opacity:0.08;" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5,30 Q60,5 120,30 Q160,50 195,25" stroke="#B8693C" stroke-width="14" fill="none" stroke-linecap="round"/>
+  </svg>
+
+  <!-- Hero content -->
+  <div style="max-width:1100px; margin:0 auto; padding:6rem 3rem 3rem; display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; width:100%; position:relative; z-index:2;">
+
+    <!-- Left: text -->
+    <div class="wc-reveal" id="wc-h-text">
+      <span class="tag">Mississauga · Ontario · Canada</span>
+      <h1 class="wc-headline" style="margin-bottom:1.5rem;">
+        A Grace Hub<br>for the <em>Weary</em>
+      </h1>
+      <p style="color:#5A5450; font-size:1.05rem; line-height:1.8; margin-bottom:2rem; max-width:420px;">
+        A café, a listening ear, and a warm community — all within reach of Credit Valley Hospital.
+        No cost, no conditions. Just grace.
+      </p>
+      <p style="font-family:'Lora',serif; font-style:italic; color:#7EB87E; margin-bottom:2rem;">新葉恩亭 · New Leaves, Grace Pavilion</p>
+      <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+        <a href="#" style="background:#2C5F2E; color:#F5EDD8; padding:0.9rem 2.2rem; border-radius:50px; text-decoration:none; font-size:0.9rem; transition:all 0.3s; box-shadow:0 4px 20px rgba(44,95,46,0.25);" onmouseover="this.style.background='#1A3E1C'" onmouseout="this.style.background='#2C5F2E'">Visit Today</a>
+        <a href="#" style="background:rgba(184,105,60,0.12); color:#B8693C; border:1.5px solid rgba(184,105,60,0.3); padding:0.9rem 2.2rem; border-radius:50px; text-decoration:none; font-size:0.9rem; transition:all 0.3s;" onmouseover="this.style.background='rgba(184,105,60,0.2)'" onmouseout="this.style.background='rgba(184,105,60,0.12)'">Our Mission</a>
+      </div>
+    </div>
+
+    <!-- Right: watercolour-framed photo collage -->
+    <div style="position:relative;" class="wc-reveal" id="wc-h-photos">
+      <!-- Main photo — painted shape -->
+      <div style="position:relative; border-radius:42% 58% 55% 45% / 48% 42% 58% 52%; overflow:hidden; height:420px; border:3px solid rgba(126,184,126,0.3); box-shadow:0 20px 60px rgba(44,95,46,0.2);">
+        <img src="https://picsum.photos/seed/warm-community-cafe-morning/600/480" alt="Community café morning" style="width:100%; height:100%; object-fit:cover;" loading="lazy"/>
+        <!-- Watercolour paint overlay -->
+        <div style="position:absolute; inset:0; background:linear-gradient(135deg,rgba(44,95,46,0.15),rgba(126,184,126,0.08),rgba(184,105,60,0.1)); mix-blend-mode:multiply;"></div>
+      </div>
+      <!-- Secondary photo chip -->
+      <div style="position:absolute; bottom:-20px; right:-20px; width:160px; height:140px; border-radius:30% 70% 40% 60% / 60% 35% 65% 40%; overflow:hidden; border:3px solid rgba(184,105,60,0.3); box-shadow:0 12px 30px rgba(184,105,60,0.2);">
+        <img src="https://picsum.photos/seed/candle-tea-autumn/300/280" alt="Peaceful moment" style="width:100%; height:100%; object-fit:cover;" loading="lazy"/>
+      </div>
+      <!-- Paint splash ornament -->
+      <svg style="position:absolute; top:-25px; left:-25px; width:80px; opacity:0.2;" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="40" r="35" fill="#B8693C"/>
+        <circle cx="55" cy="25" r="15" fill="#D4A96A"/>
+        <circle cx="25" cy="55" r="12" fill="#C8793C"/>
+      </svg>
+    </div>
+
+  </div>
+</section>
+
+<!-- Scroll anchor -->
+<div id="services"></div>
+
+<!-- Services — watercolour card grid -->
+<section style="background:rgba(250,246,238,0.95); padding:6rem 3rem;">
+  <div style="max-width:1100px; margin:0 auto;">
+    <div style="text-align:center; margin-bottom:4rem;" class="wc-reveal">
+      <span class="tag">How We Serve</span>
+      <h2 style="font-family:'Lora',serif; font-size:2.4rem; color:#2A2520; margin-bottom:0.75rem;">Six Ways of Grace</h2>
+      <div style="width:60px; height:3px; background:linear-gradient(to right, #7EB87E, #B8693C); margin:0 auto; border-radius:2px;"></div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem;">
+
+      <div class="wc-card wc-reveal" style="animation-delay:0.1s">
+        <div class="wc-card-top wash-1">
+          <!-- Watercolour painted cup illustration -->
+          <svg width="70" height="70" viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg" opacity="0.9">
+            <ellipse cx="35" cy="50" rx="22" ry="8" fill="rgba(44,95,46,0.3)"/>
+            <rect x="15" y="28" width="40" height="28" fill="#F5EDD8" rx="4" opacity="0.9"/>
+            <ellipse cx="35" cy="28" rx="20" ry="7" fill="#EDE4CC" opacity="0.9"/>
+            <path d="M55,35 Q68,35 68,43 Q68,51 55,51" stroke="#B8693C" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <!-- Steam -->
+            <path d="M25,24 Q27,16 25,10" stroke="rgba(255,255,255,0.7)" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M35,24 Q37,14 35,8" stroke="rgba(255,255,255,0.7)" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M45,24 Q47,16 45,10" stroke="rgba(255,255,255,0.7)" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="wc-card-body">
+          <h3 style="font-family:'Lora',serif; color:#2A2520; margin-bottom:0.5rem; font-size:1.15rem;">Community Café</h3>
+          <p style="color:#6B6460; font-size:0.88rem; line-height:1.65;">A warm table, quality drinks, and no pressure to leave. Rest here as long as you need.</p>
+        </div>
+      </div>
+
+      <div class="wc-card wc-reveal" style="animation-delay:0.15s">
+        <div class="wc-card-top wash-2">
+          <svg width="70" height="70" viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg" opacity="0.9">
+            <circle cx="35" cy="28" r="16" fill="#F5EDD8" opacity="0.9"/>
+            <circle cx="35" cy="28" r="10" fill="#B8693C" opacity="0.7"/>
+            <path d="M22,42 Q25,54 35,58 Q45,54 48,42" stroke="#2C5F2E" stroke-width="2" fill="rgba(44,95,46,0.1)" stroke-linecap="round"/>
+            <path d="M14,48 C14,48 20,44 35,44 C50,44 56,48 56,48" stroke="#EDE4CC" stroke-width="2" fill="none"/>
+          </svg>
+        </div>
+        <div class="wc-card-body">
+          <h3 style="font-family:'Lora',serif; color:#2A2520; margin-bottom:0.5rem; font-size:1.15rem;">Pastoral Support</h3>
+          <p style="color:#6B6460; font-size:0.88rem; line-height:1.65;">Compassionate listening and spiritual care through grief, illness, and difficult seasons.</p>
+        </div>
+      </div>
+
+      <div class="wc-card wc-reveal" style="animation-delay:0.2s">
+        <div class="wc-card-top wash-3">
+          <svg width="70" height="70" viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg" opacity="0.9">
+            <polygon points="35,8 60,40 10,40" fill="#F5EDD8" opacity="0.9"/>
+            <rect x="15" y="40" width="40" height="24" fill="#EDE4CC" opacity="0.9" rx="2"/>
+            <rect x="27" y="44" width="16" height="20" fill="#B8693C" rx="8 8 0 0"/>
+            <circle cx="37" cy="56" r="2.5" fill="#F5EDD8"/>
+            <rect x="18" y="44" width="10" height="10" fill="#FFF9C4" opacity="0.8" rx="1"/>
+          </svg>
+        </div>
+        <div class="wc-card-body">
+          <h3 style="font-family:'Lora',serif; color:#2A2520; margin-bottom:0.5rem; font-size:1.15rem;">Practical Aid</h3>
+          <p style="color:#6B6460; font-size:0.88rem; line-height:1.65;">Help navigating hospital systems, community resources, and practical day-to-day needs.</p>
+        </div>
+      </div>
+
+      <div class="wc-card wc-reveal" style="animation-delay:0.25s">
+        <div class="wc-card-top wash-4">
+          <svg width="70" height="70" viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg" opacity="0.9">
+            <circle cx="35" cy="30" r="20" fill="rgba(44,95,46,0.15)" opacity="0.9"/>
+            <path d="M35,50 L35,18 M22,24 L35,18 M48,24 L35,18" stroke="#2C5F2E" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <circle cx="35" cy="18" r="5" fill="#FFF9C4" opacity="0.9"/>
+            <!-- Rays -->
+            <line x1="35" y1="10" x2="35" y2="5" stroke="#D4A96A" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+            <line x1="44" y1="13" x2="48" y2="9" stroke="#D4A96A" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+            <line x1="26" y1="13" x2="22" y2="9" stroke="#D4A96A" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="wc-card-body">
+          <h3 style="font-family:'Lora',serif; color:#2A2520; margin-bottom:0.5rem; font-size:1.15rem;">Prayer & Reflection</h3>
+          <p style="color:#6B6460; font-size:0.88rem; line-height:1.65;">A quiet corner for prayer, meditation, or simply sitting in still, sacred space.</p>
+        </div>
+      </div>
+
+      <div class="wc-card wc-reveal" style="animation-delay:0.3s">
+        <div class="wc-card-top wash-5">
+          <svg width="70" height="70" viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg" opacity="0.9">
+            <circle cx="20" cy="24" r="10" fill="#F5EDD8" opacity="0.9"/>
+            <circle cx="35" cy="20" r="12" fill="#EDE4CC" opacity="0.9"/>
+            <circle cx="50" cy="24" r="10" fill="#F5EDD8" opacity="0.9"/>
+            <rect x="10" y="34" width="18" height="22" fill="#2C5F2E" rx="6" opacity="0.85"/>
+            <rect x="26" y="32" width="18" height="24" fill="#7EB87E" rx="6" opacity="0.85"/>
+            <rect x="42" y="34" width="18" height="22" fill="#2E5D5A" rx="6" opacity="0.85"/>
+          </svg>
+        </div>
+        <div class="wc-card-body">
+          <h3 style="font-family:'Lora',serif; color:#2A2520; margin-bottom:0.5rem; font-size:1.15rem;">Group Gatherings</h3>
+          <p style="color:#6B6460; font-size:0.88rem; line-height:1.65;">Regular circles, shared meals, and community events. Healing happens together.</p>
+        </div>
+      </div>
+
+      <div class="wc-card wc-reveal" style="animation-delay:0.35s">
+        <div class="wc-card-top wash-6">
+          <svg width="70" height="70" viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg" opacity="0.9">
+            <ellipse cx="28" cy="40" rx="22" ry="17" fill="#2C5F2E" transform="rotate(-20,28,40)" opacity="0.9"/>
+            <line x1="28" y1="23" x2="28" y2="57" stroke="#1A3E1C" stroke-width="2"/>
+            <line x1="28" y1="36" x2="45" y2="28" stroke="#1A3E1C" stroke-width="1.2"/>
+            <line x1="28" y1="46" x2="12" y2="40" stroke="#1A3E1C" stroke-width="1.2"/>
+            <ellipse cx="50" cy="28" rx="14" ry="11" fill="#7EB87E" transform="rotate(15,50,28)" opacity="0.85"/>
+            <line x1="50" y1="17" x2="50" y2="39" stroke="#2C5F2E" stroke-width="1.2"/>
+          </svg>
+        </div>
+        <div class="wc-card-body">
+          <h3 style="font-family:'Lora',serif; color:#2A2520; margin-bottom:0.5rem; font-size:1.15rem;">Family Care</h3>
+          <p style="color:#6B6460; font-size:0.88rem; line-height:1.65;">Support for caregivers and families — you deserve care too, not just the patient.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Large painted photo section -->
+<section class="painted-photo-section">
+  <img src="https://picsum.photos/seed/garden-green-path-sunlight/1400/600" alt="Green garden path in sunlight" loading="lazy"/>
+  <div class="paint-overlay"></div>
+  <!-- Watercolour overlay blobs on photo -->
+  <div style="position:absolute; inset:0; background:radial-gradient(ellipse 40% 60% at 80% 40%, rgba(126,184,126,0.2), transparent); pointer-events:none;"></div>
+  <div class="photo-caption">
+    <div class="wc-reveal">
+      <p style="font-family:'Lora',serif; font-size:clamp(1.6rem,4vw,2.8rem); color:#F5EDD8; font-style:italic; text-shadow:0 2px 20px rgba(0,0,0,0.4); line-height:1.4; margin-bottom:1rem;">
+        "Every leaf that falls<br>makes room for new growth."
+      </p>
+      <p style="color:rgba(245,237,216,0.7); font-size:0.88rem; letter-spacing:0.12em; text-transform:uppercase;">— Spirit of Newleaf Grace Hub</p>
+    </div>
+  </div>
+</section>
+
+<!-- Scripture Quote -->
+<section class="wc-quote-section">
+  <!-- Background wash blobs -->
+  <div class="wc-blob" style="position:absolute; width:500px;height:400px;background:rgba(126,184,126,0.1);top:-100px;right:-80px;"></div>
+  <div class="wc-blob" style="position:absolute; width:400px;height:350px;background:rgba(184,105,60,0.08);bottom:-80px;left:-80px;"></div>
+
+  <div style="max-width:750px; margin:0 auto; text-align:center; position:relative; z-index:2;" class="wc-reveal">
+    <!-- Watercolour brush frame -->
+    <svg style="width:100%; max-width:600px; margin-bottom:2rem; opacity:0.15;" viewBox="0 0 600 20" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20,10 Q100,2 300,10 Q500,18 580,8" stroke="#2C5F2E" stroke-width="6" fill="none" stroke-linecap="round"/>
+    </svg>
+    <p style="font-family:'Lora',serif; font-size:clamp(1.4rem,3vw,2rem); color:#2A2520; font-style:italic; line-height:1.65; margin-bottom:1.5rem;">
+      "Come to me, all who are weary and burdened,<br>and I will give you rest."
+    </p>
+    <p style="color:#7EB87E; font-size:0.88rem; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:2rem;">Matthew 11:28</p>
+    <svg style="width:100%; max-width:600px; opacity:0.12;" viewBox="0 0 600 20" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20,10 Q100,18 300,10 Q500,2 580,12" stroke="#B8693C" stroke-width="6" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="wc-cta">
+  <div style="max-width:700px; margin:0 auto;" class="wc-reveal">
+    <div style="background:rgba(255,253,248,0.85); border:1.5px solid rgba(44,95,46,0.15); border-radius:32px; padding:3.5rem 4rem; backdrop-filter:blur(8px); box-shadow:0 20px 60px rgba(44,95,46,0.1);">
+      <span class="tag">Open Now</span>
+      <h2 style="font-family:'Lora',serif; font-size:2.2rem; color:#2A2520; margin-bottom:1rem; line-height:1.25;">You Are Always Welcome Here</h2>
+      <p style="color:#6B6460; line-height:1.75; margin-bottom:2rem; font-size:0.95rem;">No appointment. No criteria. No fee. Just walk in — we'll be glad you came.</p>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-bottom:2rem;">
+        <a href="#" style="background:#2C5F2E; color:#F5EDD8; padding:1rem 2.5rem; border-radius:50px; text-decoration:none; font-size:0.9rem; transition:all 0.3s; box-shadow:0 6px 20px rgba(44,95,46,0.25);" onmouseover="this.style.background='#1A3E1C'" onmouseout="this.style.background='#2C5F2E'">Plan My Visit</a>
+        <a href="#" style="background:#B8693C; color:#F5EDD8; padding:1rem 2.5rem; border-radius:50px; text-decoration:none; font-size:0.9rem; transition:all 0.3s; box-shadow:0 6px 20px rgba(184,105,60,0.2);" onmouseover="this.style.background='#A05A30'" onmouseout="this.style.background='#B8693C'">Support Our Work</a>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; text-align:left; border-top:1px solid rgba(44,95,46,0.1); padding-top:1.5rem;">
+        <div>
+          <p style="font-size:0.78rem; color:#8A8278; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.3rem;">Hours</p>
+          <p style="color:#2A2520; font-size:0.9rem;">Mon – Sat · 9 AM – 5 PM</p>
+        </div>
+        <div>
+          <p style="font-size:0.78rem; color:#8A8278; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.3rem;">Location</p>
+          <p style="color:#2A2520; font-size:0.9rem;">Near Credit Valley Hospital, Mississauga</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p class="brand">Newleaf Grace Hub · 新葉恩亭</p>
+  <p style="font-size:0.85rem; margin-bottom:0.5rem;">Near Credit Valley Hospital · Mississauga, Ontario</p>
+  <p style="font-size:0.78rem; opacity:0.5;">© 2026 Newleaf Grace Hub. Registered Canadian Non-Profit.</p>
+</footer>
+
+</div><!-- .page -->
+
+<script>
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.wc-reveal').forEach(el => obs.observe(el));
+
+  // Animate hero elements in
+  const heroText = document.getElementById('wc-h-text');
+  const heroPhotos = document.getElementById('wc-h-photos');
+  setTimeout(() => { if (heroText) heroText.classList.add('on'); }, 200);
+  setTimeout(() => { if (heroPhotos) heroPhotos.classList.add('on'); }, 500);
+
+  // Watercolour blob morph animation (enhanced via Anime.js)
+  anime({
+    targets: '.wc-blob',
+    borderRadius: [
+      '60% 40% 55% 45% / 50% 55% 45% 55%',
+      '45% 55% 40% 60% / 55% 45% 60% 40%',
+      '55% 45% 65% 35% / 45% 60% 40% 55%',
+    ],
+    duration: 10000,
+    loop: true,
+    direction: 'alternate',
+    easing: 'easeInOutSine',
+    delay: anime.stagger(3000),
+  });
+</script>
+</body>
+</html>

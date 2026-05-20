@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newleaf Grace Hub · Warm Vintage</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      forest:'#2C5F2E', spring:'#7EB87E', terra:'#B8693C',
+      cream:'#F5EDD8', charcoal:'#2A2520', teal:'#2E5D5A',
+      linen:'#EDE4CC', wgray:'#8A8278', rust:'#9B4E28',
+      aged:'#C4A882', parchment:'#F0E6C8'
+    }, fontFamily: { display:['Lora','Georgia','serif'], play:['Playfair Display','Georgia','serif'], body:['DM Sans','system-ui','sans-serif'] } } } }
+  </script>
+  <style>
+    body { font-family:'DM Sans',system-ui,sans-serif; background:#F0E6C8; }
+
+    /* Noise/paper texture overlay */
+    body::before {
+      content:''; position:fixed; inset:0; pointer-events:none; z-index:1000;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      opacity:.5;
+    }
+
+    /* Vintage border frame */
+    .vintage-frame {
+      border: 1px solid rgba(155,78,40,.25);
+      box-shadow: 0 0 0 4px rgba(240,230,200,.8), 0 0 0 5px rgba(155,78,40,.12);
+      position:relative;
+    }
+    .vintage-frame::before, .vintage-frame::after {
+      content:'✦'; position:absolute; font-size:10px; color:#B8693C; opacity:.5;
+    }
+    .vintage-frame::before { top:-6px; left:50%; transform:translateX(-50%); }
+    .vintage-frame::after { bottom:-6px; left:50%; transform:translateX(-50%); }
+
+    /* Stamp ornament */
+    .stamp {
+      border: 2px solid;
+      border-radius:4px;
+      padding:4px 10px;
+      display:inline-block;
+      font-size:9px;
+      letter-spacing:.4em;
+      text-transform:uppercase;
+      transform:rotate(-2deg);
+      opacity:.7;
+    }
+
+    /* Decorative rule with ornament */
+    .orn-rule { display:flex; align-items:center; gap:12px; }
+    .orn-rule::before, .orn-rule::after { content:''; flex:1; height:1px; background:currentColor; opacity:.2; }
+
+    .reveal { opacity:0; transform:translateY(22px); transition:opacity .8s ease,transform .8s ease; }
+    .reveal.on { opacity:1; transform:none; }
+
+    /* Service card vintage style */
+    .v-card { background:rgba(240,230,200,.7); border:1px solid rgba(155,78,40,.15); transition:transform .3s ease,box-shadow .3s ease; }
+    .v-card:hover { transform:translateY(-4px) rotate(.3deg); box-shadow:4px 8px 24px rgba(42,37,32,.12); }
+
+    @keyframes fade { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:none} }
+
+    /* Pull-quote style */
+    .pullquote { border-left:3px solid #B8693C; padding-left:20px; font-style:italic; }
+  </style>
+</head>
+<body class="text-charcoal overflow-x-hidden">
+
+<!-- NAV — vintage banner style -->
+<nav class="fixed top-0 inset-x-0 z-50 border-b-2 border-terra/20" style="background:rgba(196,168,130,.97);backdrop-filter:blur(8px)">
+  <div class="max-w-5xl mx-auto px-8 py-4">
+    <!-- Top decorative line -->
+    <div class="orn-rule text-terra/40 text-xs mb-3">
+      <span class="font-display italic text-terra/60 tracking-widest text-xs">新葉恩亭 · Newleaf Grace Hub · 新葉恩亭</span>
+    </div>
+    <div class="flex items-center justify-between">
+      <div class="text-center">
+        <p class="font-play text-charcoal italic text-xl leading-none">Newleaf Grace Hub</p>
+        <p class="text-rust text-xs tracking-[.35em] mt-0.5">EST. 2026 · MISSISSAUGA</p>
+      </div>
+      <div class="hidden md:flex items-center gap-8 text-charcoal/65 text-xs tracking-[.2em] uppercase font-body">
+        <a href="#services" class="hover:text-terra transition-colors">Services</a>
+        <a href="#about" class="hover:text-terra transition-colors">About</a>
+        <a href="#contact" class="stamp border-terra text-terra hover:bg-terra hover:text-cream hover:opacity-100 transition-all cursor-pointer">Find Us</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO — vintage poster style -->
+<section class="min-h-screen flex items-center justify-center px-8 pt-36 pb-20 relative" style="background:linear-gradient(165deg,#F0E6C8 0%,#EDE4CC 60%,#E5D8B8 100%)">
+  <!-- Corner ornaments -->
+  <div class="absolute top-24 left-8 text-terra/20 font-display text-5xl italic leading-none pointer-events-none select-none">❧</div>
+  <div class="absolute top-24 right-8 text-terra/20 font-display text-5xl italic leading-none pointer-events-none select-none" style="transform:scaleX(-1)">❧</div>
+  <div class="absolute bottom-8 left-8 text-terra/15 font-display text-4xl leading-none pointer-events-none">✦</div>
+  <div class="absolute bottom-8 right-8 text-terra/15 font-display text-4xl leading-none pointer-events-none">✦</div>
+
+  <div class="max-w-3xl mx-auto text-center">
+    <div class="inline-block mb-8 opacity-0" id="h-stamp" style="animation:fade .5s .05s ease both">
+      <span class="stamp border-terra/50 text-terra/70">Non-Profit · Mississauga</span>
+    </div>
+
+    <!-- Main vintage headline -->
+    <div class="vintage-frame p-10 mb-8 opacity-0" id="h-box" style="animation:fade .8s .15s ease both">
+      <p class="text-rust text-xs tracking-[.5em] uppercase font-body mb-5">A Community Space</p>
+      <h1 class="font-play text-charcoal italic leading-[1.08] mb-5" style="font-size:clamp(2.8rem,5.5vw,5rem)">
+        A Place to Rest,<br>Renew &amp; Reconnect
+      </h1>
+      <div class="orn-rule text-terra text-sm my-4">✦</div>
+      <p class="font-display text-terra text-2xl italic">新葉恩亭</p>
+    </div>
+
+    <p class="text-charcoal/60 text-base font-light leading-[1.9] max-w-xl mx-auto mb-10 opacity-0" id="h-s" style="animation:fade .7s .55s ease both">
+      新葉恩亭 welcomes the weary and burdened — a café and support hub near Credit Valley Hospital, where all are welcome to find rest and renewed strength.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center opacity-0" id="h-c" style="animation:fade .7s .7s ease both">
+      <a href="#services" class="bg-terra text-cream px-8 py-4 text-sm tracking-[.2em] uppercase font-body hover:bg-rust transition-colors duration-300">
+        Our Services
+      </a>
+      <a href="#about" class="border border-terra/40 text-terra px-8 py-4 text-sm tracking-[.2em] uppercase font-body hover:bg-terra/10 transition-colors">
+        Our Story
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES — vintage card grid -->
+<section id="services" class="py-24 px-8" style="background:#EDE4CC">
+  <div class="max-w-5xl mx-auto">
+    <!-- Section header vintage style -->
+    <div class="text-center mb-14 reveal">
+      <div class="orn-rule text-terra/40 text-sm mb-6">✦ ✦ ✦</div>
+      <p class="text-rust text-xs tracking-[.5em] uppercase font-body mb-3">主要服務</p>
+      <h2 class="font-play text-charcoal italic text-4xl md:text-5xl mb-2">Six Pillars of Care</h2>
+      <div class="orn-rule text-terra/30 text-sm mt-6">— 恩典 Grace —</div>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div class="v-card rounded p-7 reveal">
+        <p class="text-rust text-xs tracking-[.4em] uppercase mb-3">01 · 社區空間</p>
+        <h3 class="font-display text-charcoal text-xl italic mb-3">Community Space</h3>
+        <div class="w-8 h-px bg-terra/30 mb-3"></div>
+        <p class="text-charcoal/60 text-sm font-light leading-relaxed">A safe café where people find connection, rest, and meaningful conversation.</p>
+      </div>
+      <div class="v-card rounded p-7 reveal" style="transition-delay:.06s">
+        <p class="text-rust text-xs tracking-[.4em] uppercase mb-3">02 · 輔導關懷</p>
+        <h3 class="font-display text-charcoal text-xl italic mb-3">Counselling &amp; Care</h3>
+        <div class="w-8 h-px bg-terra/30 mb-3"></div>
+        <p class="text-charcoal/60 text-sm font-light leading-relaxed">Emotional and spiritual support in safe, private settings for life's challenges.</p>
+      </div>
+      <div class="v-card rounded p-7 reveal" style="transition-delay:.12s">
+        <p class="text-rust text-xs tracking-[.4em] uppercase mb-3">03 · 支援小組</p>
+        <h3 class="font-display text-charcoal text-xl italic mb-3">Support Groups</h3>
+        <div class="w-8 h-px bg-terra/30 mb-3"></div>
+        <p class="text-charcoal/60 text-sm font-light leading-relaxed">Peer groups for caregivers and families — mutual encouragement and resources.</p>
+      </div>
+      <div class="v-card rounded p-7 reveal" style="transition-delay:.06s">
+        <p class="text-rust text-xs tracking-[.4em] uppercase mb-3">04 · 工作坊退修</p>
+        <h3 class="font-display text-charcoal text-xl italic mb-3">Workshops &amp; Retreats</h3>
+        <div class="w-8 h-px bg-terra/30 mb-3"></div>
+        <p class="text-charcoal/60 text-sm font-light leading-relaxed">Holistic growth, ESL integration, and community-building programs.</p>
+      </div>
+      <div class="v-card rounded p-7 reveal" style="transition-delay:.12s">
+        <p class="text-rust text-xs tracking-[.4em] uppercase mb-3">05 · 康樂創意</p>
+        <h3 class="font-display text-charcoal text-xl italic mb-3">Recreation &amp; Creative</h3>
+        <div class="w-8 h-px bg-terra/30 mb-3"></div>
+        <p class="text-charcoal/60 text-sm font-light leading-relaxed">Arts, singing, and light activities for social wellbeing and connection.</p>
+      </div>
+      <div class="v-card rounded p-7 reveal" style="transition-delay:.18s">
+        <p class="text-rust text-xs tracking-[.4em] uppercase mb-3">06 · 社區合作</p>
+        <h3 class="font-display text-charcoal text-xl italic mb-3">Community Collaboration</h3>
+        <div class="w-8 h-px bg-terra/30 mb-3"></div>
+        <p class="text-charcoal/60 text-sm font-light leading-relaxed">Partnering with hospitals and churches near Credit Valley Hospital.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA — vintage pull quote + seal -->
+<section id="about" class="py-28 px-8" style="background:#F0E6C8">
+  <div class="max-w-4xl mx-auto reveal">
+    <div class="orn-rule text-terra/30 text-sm mb-12">✦ ✦ ✦</div>
+    <div class="grid md:grid-cols-5 gap-12 items-center">
+      <!-- Vintage seal / stamp -->
+      <div class="md:col-span-2 flex justify-center">
+        <div class="relative w-44 h-44">
+          <svg viewBox="0 0 176 176" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+            <circle cx="88" cy="88" r="82" stroke="#B8693C" stroke-width="1.5" fill="none" opacity=".4"/>
+            <circle cx="88" cy="88" r="72" stroke="#B8693C" stroke-width="0.8" fill="none" opacity=".3"/>
+            <circle cx="88" cy="88" r="60" fill="rgba(196,168,130,.3)" stroke="#B8693C" stroke-width="1" opacity=".5"/>
+            <!-- Leaf in centre -->
+            <path d="M88 56C100 60,112 72,108 84C104 96,96 104,88 106C80 104,72 96,68 84C64 72,76 60,88 56Z" fill="#2C5F2E" opacity=".7"/>
+            <line x1="88" y1="57" x2="88" y2="105" stroke="#F5EDD8" stroke-width=".8" opacity=".6"/>
+            <!-- Circle text (simulated with tspan) -->
+            <text font-family="Lora,Georgia,serif" font-size="9" fill="#9B4E28" opacity=".65" text-anchor="middle">
+              <textPath href="#seal-circle" startOffset="0%">· NEWLEAF GRACE HUB · 新葉恩亭 · MISSISSAUGA ·</textPath>
+            </text>
+            <defs>
+              <path id="seal-circle" d="M 88 18 A 70 70 0 1 1 87.9 18"/>
+            </defs>
+          </svg>
+        </div>
+      </div>
+      <div class="md:col-span-3">
+        <p class="text-rust text-xs tracking-[.45em] uppercase mb-6">歡迎你 · Come As You Are</p>
+        <h2 class="font-play text-charcoal italic text-4xl leading-tight mb-6">
+          You Don't Have to<br>Carry It Alone.
+        </h2>
+        <div class="pullquote text-charcoal/65 text-base font-light leading-[1.9] mb-10">
+          Whether you're a caregiver, newcomer to Canada, or simply weary — our doors are open. Find rest and renewed strength near Credit Valley Hospital.
+        </div>
+        <a href="#contact" class="inline-block bg-terra text-cream px-8 py-4 text-sm tracking-[.2em] uppercase font-body hover:bg-rust transition-colors duration-300">
+          Visit Newleaf Grace Hub
+        </a>
+      </div>
+    </div>
+    <div class="orn-rule text-terra/30 text-sm mt-12">✦ ✦ ✦</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact" class="py-14 px-8 border-t-2 border-terra/20" style="background:#2A2520">
+  <div class="max-w-5xl mx-auto">
+    <div class="orn-rule text-aged/30 text-xs mb-10">
+      <span class="font-display text-aged/50 italic text-sm tracking-widest">新葉恩亭</span>
+    </div>
+    <div class="grid md:grid-cols-3 gap-12 mb-10 text-aged/55">
+      <div>
+        <p class="font-play text-aged italic text-lg mb-1">Newleaf Grace Hub</p>
+        <p class="text-terra/70 text-xs tracking-widest mb-4">EST. 2026 · MISSISSAUGA</p>
+        <p class="text-xs font-light leading-relaxed">A welcoming non-profit community space sponsored by Mississauga Chinese Baptist Church.</p>
+      </div>
+      <div>
+        <p class="text-aged/70 text-xs tracking-[.3em] uppercase mb-4">Our Services</p>
+        <ul class="space-y-1.5 text-xs font-light">
+          <li>Community Café Space</li><li>Counselling &amp; Pastoral Care</li><li>Support Groups</li>
+          <li>Workshops &amp; Retreats</li><li>Recreation &amp; Creative</li><li>Community Collaboration</li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-aged/70 text-xs tracking-[.3em] uppercase mb-4">Find Us</p>
+        <p class="text-xs font-light leading-relaxed mb-3">Near Credit Valley Hospital<br>Mississauga, Ontario, Canada</p>
+        <p class="text-xs font-light">Mon–Fri 9am–6pm<br>Evenings &amp; Weekends: Programs</p>
+      </div>
+    </div>
+    <div class="border-t border-aged/10 pt-6 flex justify-between text-aged/35 text-xs font-light flex-wrap gap-3">
+      <p>© 2026 Newleaf Grace Hub · 新葉恩亭</p>
+      <p>Registered Canadian Non-Profit Charity</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+anime.timeline({ easing:'easeOutExpo' })
+  .add({ targets:'#h-stamp', opacity:[0,1], translateY:[10,0], duration:600 })
+  .add({ targets:'#h-box',   opacity:[0,1], translateY:[22,0], duration:900 }, '-=300')
+  .add({ targets:'#h-s',     opacity:[0,1], translateY:[14,0], duration:700 }, '-=500')
+  .add({ targets:'#h-c',     opacity:[0,1], translateY:[14,0], duration:700 }, '-=400');
+
+const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('on'); }), {threshold:.1});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
